@@ -1,5 +1,15 @@
 ---
 // Recent News Section Component
+import { client } from '../../tina/__generated__/client';
+
+// Fetch latest blog posts
+const { data } = await client.queries.postConnection();
+const posts = data.postConnection.edges.map(edge => edge.node);
+
+// Sort by publish date and get latest 3 posts
+const latestPosts = posts
+  .sort((a, b) => new Date(b.publishDate || '').getTime() - new Date(a.publishDate || '').getTime())
+  .slice(0, 3);
 ---
 
 <!--  Recent news Section -->
@@ -30,43 +40,21 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xl-6 mb-7 mb-xl-0">
-          <div class="resources d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100"
-            data-aos-duration="1000">
-            <a href="/blog-detail"
-              class="resources-img resources-img-first position-relative overflow-hidden d-block">
-              <img src="/template/assets/images/resources/resources-1.jpg" alt="resources" class="img-fluid">
-            </a>
-            <div class="resources-details">
-              <p class="mb-0">Dec 24, 2025</p>
-              <h4 class="mb-0">A campaign that connects</h4>
+        {latestPosts.map((post, index) => (
+          <div class={`${index === 0 ? 'col-xl-6 mb-7 mb-xl-0' : 'col-md-6 col-xl-3 mb-7 mb-xl-0'}`}>
+            <div class="resources d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`}
+              data-aos-duration="1000">
+              <a href={`/blog/${post._sys.filename}`}
+                class={`resources-img ${index === 0 ? 'resources-img-first' : ''} position-relative overflow-hidden d-block`}>
+                <img src={post.featuredImage} alt={post.title} class="img-fluid">
+              </a>
+              <div class="resources-details">
+                <p class="mb-0">{new Date(post.publishDate).toLocaleDateString()}</p>
+                <h4 class="mb-0">{post.title}</h4>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 col-xl-3 mb-7 mb-xl-0">
-          <div class="resources d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="200"
-            data-aos-duration="1000">
-            <a href="/blog-detail" class="resources-img position-relative overflow-hidden d-block">
-              <img src="/template/assets/images/resources/resources-2.jpg" alt="resources" class="img-fluid">
-            </a>
-            <div class="resources-details">
-              <p class="mb-0">Dec 24, 2025</p>
-              <h4 class="mb-0">An breaking boundaries our latest brand redesign</h4>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-3 mb-7 mb-xl-0">
-          <div class="resources d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="300"
-            data-aos-duration="1000">
-            <a href="/blog-detail" class="resources-img position-relative overflow-hidden d-block">
-              <img src="/template/assets/images/resources/resources-3.jpg" alt="resources" class="img-fluid">
-            </a>
-            <div class="resources-details">
-              <p class="mb-0">Dec 24, 2025</p>
-              <h4 class="mb-0">Recognized for design</h4>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </div>
