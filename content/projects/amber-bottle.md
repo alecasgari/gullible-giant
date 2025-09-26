@@ -1,7 +1,7 @@
 ---
 image: /template/assets/images/team/team-img-4.jpg
 link: /projects-detail
-title: Project 1
+title: Project 12 Project 12 Project 12
 excerpt: >-
   Short Short Description Short Short DescriptionShort Short Description Short
   Short DescriptionShort Short Description Short Short DescriptionShort Short
