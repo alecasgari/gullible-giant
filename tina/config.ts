@@ -41,6 +41,54 @@ export default defineConfig({
             required: true,
           },
           {
+            type: "string",
+            name: "excerpt",
+            label: "Excerpt",
+            required: false,
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "image",
+            name: "featuredImage",
+            label: "Featured Image",
+            required: true,
+          },
+          {
+            type: "datetime",
+            name: "publishDate",
+            label: "Publish Date",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "author",
+            label: "Author",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "category",
+            label: "Category",
+            required: true,
+            options: [
+              "Design",
+              "Development", 
+              "Business",
+              "Technology",
+              "Marketing",
+              "Tutorial"
+            ],
+          },
+          {
+            type: "string",
+            name: "tags",
+            label: "Tags",
+            list: true,
+            required: false,
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",

@@ -6,10 +6,10 @@ import MainLayout from '../../layouts/MainLayout.astro';
 const { data } = await client.queries.postConnection();
 const posts = data.postConnection.edges.map(edge => edge.node);
 
-// Sort posts by date (newest first)
+// Sort posts by publish date (newest first)
 const sortedPosts = posts.sort((a, b) => {
-  const dateA = new Date(a._sys.breadcrumbs[0] || '');
-  const dateB = new Date(b._sys.breadcrumbs[0] || '');
+  const dateA = new Date(a.publishDate || '');
+  const dateB = new Date(b.publishDate || '');
   return dateB.getTime() - dateA.getTime();
 });
 ---
@@ -37,7 +37,7 @@ const sortedPosts = posts.sort((a, b) => {
           <div class="col-md-6 col-xl-4 mb-7 mb-xl-0">
             <article class="blog-card d-flex flex-column gap-4 h-100" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
               <div class="blog-card-img position-relative overflow-hidden">
-                <img src="/template/assets/images/blog/blog-img-1.jpg" alt={post.title} class="img-fluid w-100">
+                <img src={post.featuredImage} alt={post.title} class="img-fluid w-100">
                 <div class="blog-card-overlay">
                   <a href={`/blog/${post._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">
                     Read More
@@ -46,8 +46,8 @@ const sortedPosts = posts.sort((a, b) => {
               </div>
               <div class="blog-card-content d-flex flex-column gap-3">
                 <div class="d-flex align-items-center gap-3">
-                  <span class="badge text-bg-primary">Design</span>
-                  <span class="text-opacity-70">{new Date().toLocaleDateString()}</span>
+                  <span class="badge text-bg-primary">{post.category}</span>
+                  <span class="text-opacity-70">{new Date(post.publishDate).toLocaleDateString()}</span>
                 </div>
                 <h3 class="mb-0">
                   <a href={`/blog/${post._sys.filename}`} class="text-decoration-none text-dark">
@@ -55,12 +55,12 @@ const sortedPosts = posts.sort((a, b) => {
                   </a>
                 </h3>
                 <p class="mb-0 text-opacity-70">
-                  {post.body?.children?.[0]?.children?.[0]?.text?.substring(0, 120) || 'Read more about this topic...'}...
+                  {post.excerpt || post.body?.children?.[0]?.children?.[0]?.text?.substring(0, 120) || 'Read more about this topic...'}...
                 </p>
                 <div class="d-flex align-items-center gap-3 mt-auto">
                   <img src="/template/assets/images/testimonial/testimonial-1.jpg" alt="Author" class="img-fluid rounded-circle" width="40" height="40">
                   <div>
-                    <h6 class="mb-0 fw-medium">Admin</h6>
+                    <h6 class="mb-0 fw-medium">{post.author}</h6>
                     <p class="mb-0 text-opacity-70 small">Author</p>
                   </div>
                 </div>

@@ -1,5 +1,11 @@
 ---
 title: 'Hello, World!'
+excerpt: Welcome to our blog! This is our first post where we introduce ourselves and share our vision for the future.
+featuredImage: /template/assets/images/blog/blog-img-1.jpg
+publishDate: 2024-01-15T10:00:00.000Z
+author: Admin
+category: Business
+tags: ["welcome", "introduction", "blog"]
 ---
 
 ## Hello World!
