@@ -1,8 +1,9 @@
 ---
-name: Floyd Miles
+name: Alec Asgari
 position: Marketing Strategist
 image: /template/assets/images/team/team-img-2.jpg
-twitter: "#"
-behance: "#"
-linkedin: "#"
+twitter: '#'
+behance: '#'
+linkedin: '#'
 ---
+

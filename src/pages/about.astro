@@ -1,0 +1,164 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { client } from '../../tina/__generated__/client';
+
+// Fetch team members for about page
+const { data } = await client.queries.teamConnection();
+const teamMembers = data.teamConnection.edges.map(edge => edge.node);
+---
+
+<MainLayout title="About Us - Creative Digital Agency" description="Learn about our team, mission, and values. We are passionate about creating exceptional digital experiences.">
+  <!-- About Hero Section -->
+  <section class="about-hero py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-xl-6">
+          <div class="d-flex flex-column gap-6" data-aos="fade-right" data-aos-delay="100" data-aos-duration="1000">
+            <h1 class="mb-0">About Our Creative Agency</h1>
+            <p class="fs-5 mb-0 text-opacity-70">
+              We are a passionate team of designers, developers, and strategists dedicated to creating exceptional digital experiences that drive business growth and user engagement.
+            </p>
+            <div class="d-flex flex-column gap-4">
+              <div class="d-flex align-items-center gap-3">
+                <iconify-icon icon="solar:check-circle-bold" class="fs-6 text-primary"></iconify-icon>
+                <span>5+ Years of Experience</span>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <iconify-icon icon="solar:check-circle-bold" class="fs-6 text-primary"></iconify-icon>
+                <span>100+ Successful Projects</span>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <iconify-icon icon="solar:check-circle-bold" class="fs-6 text-primary"></iconify-icon>
+                <span>50+ Happy Clients</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div class="about-hero-img" data-aos="fade-left" data-aos-delay="100" data-aos-duration="1000">
+            <img src="/template/assets/images/about/about-img-1.jpg" alt="About Us" class="img-fluid rounded-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision Section -->
+  <section class="mission-vision py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row gap-7 gap-xl-0">
+        <div class="col-xl-6">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-0">Our Mission</h2>
+            <p class="fs-5 mb-0 text-opacity-70">
+              To empower businesses with innovative digital solutions that not only meet their current needs but also anticipate future challenges and opportunities.
+            </p>
+            <p class="mb-0 text-opacity-70">
+              We believe in the power of design thinking, user-centered development, and strategic planning to create products that make a real difference in people's lives.
+            </p>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+            <h2 class="mb-0">Our Vision</h2>
+            <p class="fs-5 mb-0 text-opacity-70">
+              To be the leading creative digital agency that sets industry standards for innovation, quality, and client satisfaction.
+            </p>
+            <p class="mb-0 text-opacity-70">
+              We envision a future where every business has access to world-class digital solutions that drive growth, engagement, and success.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="d-flex flex-column gap-5 gap-xl-11">
+        <div class="row gap-7 gap-xl-0">
+          <div class="col-xl-4 col-xxl-4">
+            <div class="d-flex align-items-center gap-7 py-2" data-aos="fade-right" data-aos-delay="100" data-aos-duration="1000">
+              <span class="round-36 flex-shrink-0 text-dark rounded-circle bg-primary hstack justify-content-center fw-medium">08</span>
+              <hr class="border-line">
+              <span class="badge text-bg-dark">Our Team</span>
+            </div>
+          </div>
+          <div class="col-xl-8 col-xxl-7">
+            <div class="row">
+              <div class="col-xxl-8">
+                <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+                  <h2 class="mb-0">Meet Our Team</h2>
+                  <p class="fs-5 mb-0 text-opacity-70">
+                    Our diverse team of creative professionals brings together years of experience and fresh perspectives to deliver exceptional results.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          {teamMembers.slice(0, 4).map((member, index) => (
+            <div class="col-md-6 col-xl-3 mb-7 mb-xl-0">
+              <div class="team-card d-flex flex-column gap-4" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
+                <div class="team-card-img position-relative overflow-hidden">
+                  <img src={member.image} alt={member.name} class="img-fluid w-100">
+                </div>
+                <div class="team-card-details text-center">
+                  <h4 class="mb-1">{member.name}</h4>
+                  <p class="mb-0 text-opacity-70">{member.position}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values-section py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-0">Our Values</h2>
+            <p class="fs-5 mb-0 text-opacity-70">
+              These core values guide everything we do and shape our culture, decisions, and relationships with clients.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row gap-7 gap-lg-0 mt-7">
+        <div class="col-lg-4">
+          <div class="value-card text-center d-flex flex-column gap-4" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <div class="value-icon mx-auto">
+              <iconify-icon icon="solar:heart-bold" class="fs-1 text-primary"></iconify-icon>
+            </div>
+            <h4 class="mb-0">Passion</h4>
+            <p class="mb-0 text-opacity-70">We are passionate about creating exceptional digital experiences that make a difference.</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="value-card text-center d-flex flex-column gap-4" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+            <div class="value-icon mx-auto">
+              <iconify-icon icon="solar:shield-check-bold" class="fs-1 text-primary"></iconify-icon>
+            </div>
+            <h4 class="mb-0">Quality</h4>
+            <p class="mb-0 text-opacity-70">We never compromise on quality and always strive for excellence in everything we do.</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="value-card text-center d-flex flex-column gap-4" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+            <div class="value-icon mx-auto">
+              <iconify-icon icon="solar:users-group-rounded-bold" class="fs-1 text-primary"></iconify-icon>
+            </div>
+            <h4 class="mb-0">Collaboration</h4>
+            <p class="mb-0 text-opacity-70">We believe in the power of teamwork and collaboration to achieve great results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

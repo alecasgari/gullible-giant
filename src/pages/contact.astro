@@ -1,0 +1,210 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Contact Us - Get In Touch" description="Ready to start your next project? Get in touch with our team for a free consultation and let's create something amazing together.">
+  <!-- Contact Hero Section -->
+  <section class="contact-hero py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h1 class="mb-0">Get In Touch</h1>
+            <p class="fs-5 mb-0 text-opacity-70">
+              Ready to start your next project? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info Section -->
+  <section class="contact-form py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row gap-7 gap-xl-0">
+        <!-- Contact Form -->
+        <div class="col-xl-8">
+          <div class="contact-form-wrapper" data-aos="fade-right" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-6">Send us a message</h2>
+            <form class="d-flex flex-column gap-4">
+              <div class="row gap-4 gap-lg-0">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row gap-4 gap-lg-0">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" name="phone">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="company" class="form-label">Company</label>
+                <input type="text" class="form-control" id="company" name="company">
+              </div>
+              <div class="form-group">
+                <label for="service" class="form-label">Service Interested In</label>
+                <select class="form-select" id="service" name="service">
+                  <option value="">Select a service</option>
+                  <option value="web-design">Web Design</option>
+                  <option value="web-development">Web Development</option>
+                  <option value="ui-ux">UI/UX Design</option>
+                  <option value="branding">Branding</option>
+                  <option value="consultation">Consultation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="privacy" name="privacy" required>
+                  <label class="form-check-label" for="privacy">
+                    I agree to the <a href="/privacy" class="text-primary">Privacy Policy</a> and <a href="/terms" class="text-primary">Terms of Service</a>
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary px-5 py-3">Send Message</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-xl-4">
+          <div class="contact-info d-flex flex-column gap-6" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+            <div>
+              <h3 class="mb-4">Contact Information</h3>
+              <div class="d-flex flex-column gap-4">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="contact-icon">
+                    <iconify-icon icon="solar:phone-bold" class="fs-5 text-primary"></iconify-icon>
+                  </div>
+                  <div>
+                    <h6 class="mb-0">Phone</h6>
+                    <p class="mb-0 text-opacity-70">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="contact-icon">
+                    <iconify-icon icon="solar:letter-bold" class="fs-5 text-primary"></iconify-icon>
+                  </div>
+                  <div>
+                    <h6 class="mb-0">Email</h6>
+                    <p class="mb-0 text-opacity-70">hello@company.com</p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="contact-icon">
+                    <iconify-icon icon="solar:map-point-bold" class="fs-5 text-primary"></iconify-icon>
+                  </div>
+                  <div>
+                    <h6 class="mb-0">Address</h6>
+                    <p class="mb-0 text-opacity-70">123 Business Street<br>City, State 12345</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="mb-4">Follow Us</h4>
+              <div class="d-flex gap-3">
+                <a href="#" class="btn btn-outline-primary p-3">
+                  <iconify-icon icon="solar:twitter-bold" class="fs-5"></iconify-icon>
+                </a>
+                <a href="#" class="btn btn-outline-primary p-3">
+                  <iconify-icon icon="solar:facebook-bold" class="fs-5"></iconify-icon>
+                </a>
+                <a href="#" class="btn btn-outline-primary p-3">
+                  <iconify-icon icon="solar:instagram-bold" class="fs-5"></iconify-icon>
+                </a>
+                <a href="#" class="btn btn-outline-primary p-3">
+                  <iconify-icon icon="solar:linkedin-bold" class="fs-5"></iconify-icon>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="mb-4">Business Hours</h4>
+              <div class="d-flex flex-column gap-2">
+                <div class="d-flex justify-content-between">
+                  <span>Monday - Friday</span>
+                  <span class="text-opacity-70">9:00 AM - 6:00 PM</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span>Saturday</span>
+                  <span class="text-opacity-70">10:00 AM - 4:00 PM</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span>Sunday</span>
+                  <span class="text-opacity-70">Closed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-section">
+    <div class="map-container" style="height: 400px; background: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+      <div class="text-center">
+        <iconify-icon icon="solar:map-bold" class="fs-1 text-primary mb-3"></iconify-icon>
+        <h4>Interactive Map</h4>
+        <p class="text-opacity-70">Map integration would go here</p>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-control, .form-select {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+  }
+</style>

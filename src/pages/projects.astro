@@ -1,0 +1,175 @@
+---
+import { client } from '../../tina/__generated__/client';
+import MainLayout from '../layouts/MainLayout.astro';
+
+// Fetch all projects from TinaCMS
+const { data } = await client.queries.projectConnection();
+const projects = data.projectConnection.edges.map(edge => edge.node);
+
+// Get unique categories
+const categories = [...new Set(projects.map(project => project.category))];
+---
+
+<MainLayout title="Our Projects - Portfolio" description="Explore our portfolio of successful projects. From web design to development, see how we've helped businesses achieve their digital goals.">
+  <!-- Projects Hero Section -->
+  <section class="projects-hero py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h1 class="mb-0">Our Projects</h1>
+            <p class="fs-5 mb-0 text-opacity-70">
+              Discover our portfolio of successful projects. Each project represents our commitment to excellence and innovation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Filter -->
+  <section class="projects-filter py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8">
+          <div class="d-flex flex-wrap gap-3 justify-content-center" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <button class="btn btn-outline-primary filter-btn active" data-filter="all">All Projects</button>
+            {categories.map(category => (
+              <button class="btn btn-outline-primary filter-btn" data-filter={category.toLowerCase().replace(/\s+/g, '-')}>
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="projects-grid py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row">
+        {projects.map((project, index) => (
+          <div class="col-md-6 col-xl-4 mb-7 mb-xl-0 project-item" data-category={project.category.toLowerCase().replace(/\s+/g, '-')}>
+            <div class="project-card d-flex flex-column gap-4" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
+              <div class="project-card-img position-relative overflow-hidden">
+                <img src={project.image} alt={project.title} class="img-fluid w-100">
+                <div class="project-card-overlay">
+                  <a href={project.link} class="btn bg-primary text-dark px-4 py-2">
+                    View Project
+                  </a>
+                </div>
+              </div>
+              <div class="project-card-content d-flex flex-column gap-3">
+                <div class="d-flex align-items-center gap-3">
+                  <span class="badge text-bg-primary">{project.category}</span>
+                </div>
+                <h3 class="mb-0">
+                  <a href={project.link} class="text-decoration-none text-dark">
+                    {project.title}
+                  </a>
+                </h3>
+                <p class="mb-0 text-opacity-70">{project.description}</p>
+                <div class="d-flex flex-wrap gap-2">
+                  {project.tags.map(tag => (
+                    <span class="badge text-dark border">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="projects-cta py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-0">Ready to Start Your Project?</h2>
+            <p class="fs-5 mb-0 text-opacity-70">
+              Let's work together to create something amazing. Get in touch with our team for a free consultation.
+            </p>
+            <div class="d-flex gap-4 justify-content-center">
+              <a href="/contact" class="btn btn-primary px-5 py-3">Get Started</a>
+              <a href="/about" class="btn btn-outline-primary px-5 py-3">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .filter-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .filter-btn.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+  }
+  
+  .project-card-img {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .project-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .project-card:hover .project-card-overlay {
+    opacity: 1;
+  }
+  
+  .project-item {
+    transition: all 0.3s ease;
+  }
+  
+  .project-item.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  // Project filtering functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        const filterValue = this.getAttribute('data-filter');
+        
+        projectItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });
+</script>
