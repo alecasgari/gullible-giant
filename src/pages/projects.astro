@@ -126,8 +126,8 @@ const categories = [...new Set(projects.map(project => project.category))];
               Let's work together to create something amazing. Get in touch with our team for a free consultation.
             </p>
             <div class="d-flex gap-4 justify-content-center">
-              <a href="/contact" class="btn btn-primary px-5 py-3">Get Started</a>
-              <a href="/about" class="btn btn-outline-primary px-5 py-3">Learn More</a>
+              <a href="https://calendar.app.google/twixZsNv5j4jvbuz6" class="btn btn-primary px-5 py-3" target="_blank">Get Started</a>
+              <a href="/about" class="btn btn-primary px-5 py-3">Learn More</a>
             </div>
           </div>
         </div>
@@ -139,6 +139,16 @@ const categories = [...new Set(projects.map(project => project.category))];
 <style>
   .filter-btn {
     transition: all 0.3s ease;
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+  }
+  
+  .filter-btn:hover {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+    opacity: 0.9;
   }
   
   .filter-btn.active {

@@ -183,9 +183,7 @@ export default defineConfig({
             name: "description",
             label: "Full Description",
             required: true,
-            ui: {
-              component: "textarea",
-            },
+            isBody: true,
           },
           {
             type: "datetime",
