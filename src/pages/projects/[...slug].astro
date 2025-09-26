@@ -116,59 +116,59 @@ const videoUrl = data.project.videoUrl || defaultVideoUrl;
         </div>
         <div class="col-lg-4">
           <div class="project-sidebar" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-            <div class="sidebar-card p-4 bg-light rounded-3 mb-4">
-              <h5 class="mb-3">Project Info</h5>
+            <div class="sidebar-card p-4 bg-dark rounded-3 mb-4">
+              <h5 class="mb-3 text-white">Project Info</h5>
               <div class="d-flex flex-column gap-3">
                 <div>
-                  <h6 class="mb-1">Category</h6>
-                  <p class="mb-0 text-opacity-70">{data.project.category}</p>
+                  <h6 class="mb-1 text-white">Category</h6>
+                  <p class="mb-0 text-white text-opacity-70">{data.project.category}</p>
                 </div>
                 <div>
-                  <h6 class="mb-1">Status</h6>
-                  <p class="mb-0 text-opacity-70">{data.project.status}</p>
+                  <h6 class="mb-1 text-white">Status</h6>
+                  <p class="mb-0 text-white text-opacity-70">{data.project.status}</p>
                 </div>
                 <div>
-                  <h6 class="mb-1">Client</h6>
-                  <p class="mb-0 text-opacity-70">{data.project.clientName}</p>
+                  <h6 class="mb-1 text-white">Client</h6>
+                  <p class="mb-0 text-white text-opacity-70">{data.project.clientName}</p>
                 </div>
                 <div>
-                  <h6 class="mb-1">Date</h6>
-                  <p class="mb-0 text-opacity-70">{new Date(data.project.projectDate).toLocaleDateString()}</p>
+                  <h6 class="mb-1 text-white">Date</h6>
+                  <p class="mb-0 text-white text-opacity-70">{new Date(data.project.projectDate).toLocaleDateString()}</p>
                 </div>
                 {data.project.duration && (
                   <div>
-                    <h6 class="mb-1">Duration</h6>
-                    <p class="mb-0 text-opacity-70">{data.project.duration}</p>
+                    <h6 class="mb-1 text-white">Duration</h6>
+                    <p class="mb-0 text-white text-opacity-70">{data.project.duration}</p>
                   </div>
                 )}
               </div>
             </div>
 
             {data.project.technologies && data.project.technologies.length > 0 && (
-              <div class="sidebar-card p-4 bg-light rounded-3 mb-4">
-                <h5 class="mb-3">Technologies</h5>
+              <div class="sidebar-card p-4 bg-dark rounded-3 mb-4">
+                <h5 class="mb-3 text-white">Technologies</h5>
                 <div class="d-flex flex-wrap gap-2">
                   {data.project.technologies.map(tech => (
-                    <span class="badge text-bg-primary">{tech}</span>
+                    <span class="badge text-bg-primary text-white">{tech}</span>
                   ))}
                 </div>
               </div>
             )}
 
-            <div class="sidebar-card p-4 bg-light rounded-3 mb-4">
-              <h5 class="mb-3">Tags</h5>
+            <div class="sidebar-card p-4 bg-dark rounded-3 mb-4">
+              <h5 class="mb-3 text-white">Tags</h5>
               <div class="d-flex flex-wrap gap-2">
                 {data.project.tags.map(tag => (
-                  <span class="badge text-dark border">{tag}</span>
+                  <span class="badge text-white border border-white">{tag}</span>
                 ))}
               </div>
             </div>
 
             <div class="sidebar-card p-4 bg-primary rounded-3">
-              <h5 class="mb-3 text-white">View Project</h5>
+              <h5 class="mb-3 text-white">Live Project</h5>
               <p class="mb-3 text-white text-opacity-70">Check out the live project and see the results for yourself.</p>
               <a href={data.project.projectLink} class="btn btn-light w-100" target="_blank">
-                Visit Project
+                Visit Live Project
                 <iconify-icon icon="lucide:external-link" class="ms-2"></iconify-icon>
               </a>
             </div>

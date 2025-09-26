@@ -59,6 +59,13 @@ const projects = data.projectConnection.edges.map(edge => edge.node);
                   <span class="badge text-bg-primary">{project.category}</span>
                   <span class="badge text-bg-secondary">{project.status}</span>
                 </div>
+                {project.technologies && project.technologies.length > 0 && (
+                  <div class="d-flex flex-wrap gap-1">
+                    {project.technologies.slice(0, 2).map(tech => (
+                      <span class="badge text-bg-dark text-white small">{tech}</span>
+                    ))}
+                  </div>
+                )}
                 <div class="hstack gap-2">
                   {project.tags.slice(0, 3).map(tag => (
                     <span class="badge text-dark border">{tag}</span>

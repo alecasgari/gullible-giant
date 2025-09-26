@@ -55,7 +55,7 @@ const categories = [...new Set(projects.map(project => project.category))];
               <div class="project-card-img position-relative overflow-hidden">
                 <img src={project.featuredImage} alt={project.title} class="img-fluid w-100">
                 <div class="project-card-overlay">
-                  <a href={project.projectLink} class="btn bg-primary text-dark px-4 py-2" target="_blank">
+                  <a href={`/projects/${project._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">
                     View Project
                   </a>
                 </div>
@@ -71,7 +71,7 @@ const categories = [...new Set(projects.map(project => project.category))];
                   <span class="badge text-bg-secondary">{project.status}</span>
                 </div>
                 <h3 class="mb-0">
-                  <a href={project.projectLink} class="text-decoration-none text-dark" target="_blank">
+                  <a href={`/projects/${project._sys.filename}`} class="text-decoration-none text-dark">
                     {project.title}
                   </a>
                 </h3>
@@ -103,7 +103,7 @@ const categories = [...new Set(projects.map(project => project.category))];
                 {project.technologies && project.technologies.length > 0 && (
                   <div class="d-flex flex-wrap gap-1">
                     {project.technologies.map(tech => (
-                      <span class="badge text-bg-light text-dark small">{tech}</span>
+                      <span class="badge text-bg-dark text-white small">{tech}</span>
                     ))}
                   </div>
                 )}
