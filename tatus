@@ -1,0 +1,103 @@
+[33me08c109[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Complete website transformation with modern hero slider, updated content, and webhook integration
+content/posts/This-is-my-First-Test.md
+src/components/BannerSection.astro
+src/components/FaqSection.astro
+src/components/GetInTouchSection.astro
+src/components/RecentNewsSection.astro
+src/components/ServicesSection.astro
+src/components/StatsFactsSection.astro
+src/layouts/MainLayout.astro
+src/pages/index.astro
+[33mb99af4b[m Fix blog routing and add featured image support to blog posts
+content/posts/This-is-my-First-Test.md
+content/posts/hello-world.md
+src/pages/blog/[...slug].astro
+src/pages/blog/index.astro
+src/pages/posts/[...slug].astro
+tina/config.ts
+tina/tina-lock.json
+[33m144032e[m Add complete blog system with About, Contact, Projects, and Blog pages
+content/projects/amber-bottle.md
+content/team/floyd-miles.md
+src/pages/about.astro
+src/pages/blog/index.astro
+src/pages/contact.astro
+src/pages/projects.astro
+tina/tina-lock.json
+[33mf0d73c2[m[33m ([m[1;31morigin/main[m[33m)[m Add dynamic pricing plans management with TinaCMS
+content/pricing/basic-plan.md
+content/pricing/enterprise-plan.md
+content/pricing/professional-plan.md
+src/components/PricingSection.astro
+tina/config.ts
+[33mdd980de[m Add dynamic team management with TinaCMS
+content/team/albert-flores.md
+content/team/floyd-miles.md
+content/team/glenna-snyder.md
+content/team/martha-finley.md
+src/components/MeetOurTeamSection.astro
+tina/config.ts
+tina/tina-lock.json
+[33ma149a7f[m Add dynamic testimonials management with TinaCMS
+content/testimonials/albert-flores.md
+content/testimonials/jenny-wilson.md
+content/testimonials/robert-fox.md
+src/components/TestimonialSection.astro
+tina/config.ts
+tina/tina-lock.json
+[33ma51d74e[m Add dynamic projects management with TinaCMS
+content/projects/amber-bottle.md
+content/projects/pixelforge.md
+content/projects/snapclear.md
+src/components/FeaturedProjectsSection.astro
+tina/config.ts
+tina/tina-lock.json
+[33m684fcf4[m Update content and TinaCMS configuration
+content/posts/hello-world.md
+[33me938ae6[m Initial commit: Astro website with TinaCMS integration
+.astro/content-assets.mjs
+.astro/content-modules.mjs
+.astro/content.d.ts
+.astro/data-store.json
+.astro/settings.json
+.astro/types.d.ts
+.gitignore
+README.md
+astro.config.mjs
+content/posts/This-is-my-First-Test.md
+content/posts/hello-world.md
+package-lock.json
+package.json
+src/components/BannerSection.astro
+src/components/FaqSection.astro
+src/components/FeaturedProjectsSection.astro
+src/components/GetInTouchSection.astro
+src/components/MeetOurTeamSection.astro
+src/components/PricingSection.astro
+src/components/RecentNewsSection.astro
+src/components/ServicesSection.astro
+src/components/StatsFactsSection.astro
+src/components/TestimonialSection.astro
+src/components/WhyChooseUsSection.astro
+src/layouts/MainLayout.astro
+src/pages/index.astro
+src/pages/posts/[...slug].astro
+tina/.gitignore
+tina/config.ts
+tina/tina-lock.json
+tsconfig.json
+[33md12a44e[m Initial commit from Astro
+.gitignore
+.vscode/extensions.json
+.vscode/launch.json
+README.md
+astro.config.mjs
+package-lock.json
+package.json
+public/favicon.svg
+src/assets/astro.svg
+src/assets/background.svg
+src/components/Welcome.astro
+src/layouts/Layout.astro
+src/pages/index.astro
+tsconfig.json
