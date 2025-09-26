@@ -48,6 +48,60 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "project",
+        label: "Projects",
+        path: "content/projects",
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Title",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Description",
+            required: true,
+          },
+          {
+            type: "image",
+            name: "image",
+            label: "Image",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "link",
+            label: "Project Link",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "category",
+            label: "Category",
+            required: true,
+            options: [
+              "UX Strategy",
+              "UI Design", 
+              "Web development",
+              "Digital design",
+              "Brand identity",
+              "Photography",
+              "Studio"
+            ],
+          },
+          {
+            type: "string",
+            name: "tags",
+            label: "Tags",
+            list: true,
+            required: true,
+          },
+        ],
+      },
     ],
   },
 });

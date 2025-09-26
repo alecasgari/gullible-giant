@@ -1,5 +1,10 @@
 ---
 // Featured Projects Section Component
+import { client } from '../../tina/__generated__/client';
+
+// Fetch projects from TinaCMS
+const { data } = await client.queries.projectConnection();
+const projects = data.projectConnection.edges.map(edge => edge.node);
 ---
 
 <!--  Featured Projects Section -->
@@ -32,126 +37,29 @@
     </div>
     <div class="featured-projects-slider px-3">
       <div class="owl-carousel owl-theme">
-        <div class="item">
-          <div class="portfolio d-flex flex-column gap-6">
-            <div class="portfolio-img position-relative overflow-hidden">
-              <img src="/template/assets/images/portfolio/portfolio-img-1.jpg" alt="" class="img-fluid">
-              <div class="portfolio-overlay">
-                <a href="/projects-detail"
-                  class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                  <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                </a>
+        {projects.map((project, index) => (
+          <div class="item">
+            <div class="portfolio d-flex flex-column gap-6">
+              <div class="portfolio-img position-relative overflow-hidden">
+                <img src={project.image} alt={project.title} class="img-fluid">
+                <div class="portfolio-overlay">
+                  <a href={project.link}
+                    class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
+                    <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
+                  </a>
+                </div>
               </div>
-            </div>
-            <div class="portfolio-details d-flex flex-column gap-3">
-              <h3 class="mb-0">Snapclear</h3>
-              <div class="hstack gap-2">
-                <span class="badge text-dark border">UX Strategy</span>
-                <span class="badge text-dark border">UI Design</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="portfolio d-flex flex-column gap-6">
-            <div class="portfolio-img position-relative overflow-hidden">
-              <img src="/template/assets/images/portfolio/portfolio-img-2.jpg" alt="" class="img-fluid">
-              <div class="portfolio-overlay">
-                <a href="/projects-detail"
-                  class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                  <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                </a>
-              </div>
-            </div>
-            <div class="portfolio-details d-flex flex-column gap-3">
-              <h3 class="mb-0">Amber Bottle</h3>
-              <div class="hstack gap-2">
-                <span class="badge text-dark border">Web development</span>
-                <span class="badge text-dark border">Digital design</span>
+              <div class="portfolio-details d-flex flex-column gap-3">
+                <h3 class="mb-0">{project.title}</h3>
+                <div class="hstack gap-2">
+                  {project.tags.map(tag => (
+                    <span class="badge text-dark border">{tag}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="portfolio d-flex flex-column gap-6">
-            <div class="portfolio-img position-relative overflow-hidden">
-              <img src="/template/assets/images/portfolio/portfolio-img-3.jpg" alt="" class="img-fluid">
-              <div class="portfolio-overlay">
-                <a href="/projects-detail"
-                  class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                  <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                </a>
-              </div>
-            </div>
-            <div class="portfolio-details d-flex flex-column gap-3">
-              <h3 class="mb-0">Pixelforge</h3>
-              <div class="hstack gap-2">
-                <span class="badge text-dark border">UI/UX design</span>
-                <span class="badge text-dark border">Web development</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="portfolio d-flex flex-column gap-6">
-            <div class="portfolio-img position-relative overflow-hidden">
-              <img src="/template/assets/images/portfolio/portfolio-img-4.jpg" alt="" class="img-fluid">
-              <div class="portfolio-overlay">
-                <a href="/projects-detail"
-                  class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                  <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                </a>
-              </div>
-            </div>
-            <div class="portfolio-details d-flex flex-column gap-3">
-              <h3 class="mb-0">BioTrack LIMS</h3>
-              <div class="hstack gap-2">
-                <span class="badge text-dark border">Brand identity</span>
-                <span class="badge text-dark border">Digital design</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="portfolio d-flex flex-column gap-6">
-            <div class="portfolio-img position-relative overflow-hidden">
-              <img src="/template/assets/images/portfolio/portfolio-img-5.jpg" alt="" class="img-fluid">
-              <div class="portfolio-overlay">
-                <a href="/projects-detail"
-                  class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                  <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                </a>
-              </div>
-            </div>
-            <div class="portfolio-details d-flex flex-column gap-3">
-              <h3 class="mb-0">Amber Bottle</h3>
-              <div class="hstack gap-2">
-                <span class="badge text-dark border">Photography</span>
-                <span class="badge text-dark border">Studio</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="portfolio d-flex flex-column gap-6">
-            <div class="portfolio-img position-relative overflow-hidden">
-              <img src="/template/assets/images/portfolio/portfolio-img-6.jpg" alt="" class="img-fluid">
-              <div class="portfolio-overlay">
-                <a href="/projects-detail"
-                  class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                  <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                </a>
-              </div>
-            </div>
-            <div class="portfolio-details d-flex flex-column gap-3">
-              <h3 class="mb-0">Digital Magazine</h3>
-              <div class="hstack gap-2">
-                <span class="badge text-dark border">Digital design</span>
-                <span class="badge text-dark border">Web development</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </div>
