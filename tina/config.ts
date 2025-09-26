@@ -152,6 +152,50 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "team",
+        label: "Team Members",
+        path: "content/team",
+        fields: [
+          {
+            type: "string",
+            name: "name",
+            label: "Name",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "position",
+            label: "Position",
+            required: true,
+          },
+          {
+            type: "image",
+            name: "image",
+            label: "Profile Image",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "twitter",
+            label: "Twitter URL",
+            required: false,
+          },
+          {
+            type: "string",
+            name: "behance",
+            label: "Behance URL",
+            required: false,
+          },
+          {
+            type: "string",
+            name: "linkedin",
+            label: "LinkedIn URL",
+            required: false,
+          },
+        ],
+      },
     ],
   },
 });
