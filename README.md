@@ -1,46 +1,63 @@
-# Astro Starter Kit: Basics
+# Gullible Giant
 
-```sh
-npm create astro@latest -- --template basics
+A modern website built with Astro and TinaCMS.
+
+## Features
+
+- 🚀 Astro for fast static site generation
+- 📝 TinaCMS for content management
+- 🎨 Modern UI with Bootstrap
+- 📱 Responsive design
+- ⚡ Fast performance
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/alecasgari/gullible-giant.git
+cd gullible-giant
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+2. Install dependencies:
+```bash
+npm install
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your TinaCMS credentials
+```
 
-## 🧞 Commands
+4. Start the development server:
+```bash
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+## TinaCMS Setup
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+This project uses TinaCMS for content management. To set up TinaCMS:
 
-## 👀 Want to learn more?
+1. Create a TinaCloud account at [tina.io](https://tina.io)
+2. Create a new project
+3. Get your Client ID and Token
+4. Add them to your `.env` file
+5. Run `npx tinacms build` to build the admin panel
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npx tinacms build` - Build TinaCMS admin panel
+
+## License
+
+MIT

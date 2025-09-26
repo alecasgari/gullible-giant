@@ -1,0 +1,33 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+  const { data } = await client.queries.postConnection();
+  const paths = data.postConnection.edges.map((edge) => ({
+    params: { slug: edge.node._sys.filename },
+  }));
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const { data, query, variables } = await client.queries.post({
+  relativePath: `${slug}.md`,
+});
+---
+
+<MainLayout title={data.post.title}>
+  <section class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1>{data.post.title}</h1>
+        <hr />
+        <div class="post-body">
+          <TinaMarkdown content={data.post.body} />
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

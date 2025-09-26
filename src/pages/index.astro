@@ -1,11 +1,56 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import BannerSection from '../components/BannerSection.astro';
+import StatsFactsSection from '../components/StatsFactsSection.astro';
+import FeaturedProjectsSection from '../components/FeaturedProjectsSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import WhyChooseUsSection from '../components/WhyChooseUsSection.astro';
+import TestimonialSection from '../components/TestimonialSection.astro';
+import MeetOurTeamSection from '../components/MeetOurTeamSection.astro';
+import PricingSection from '../components/PricingSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import RecentNewsSection from '../components/RecentNewsSection.astro';
+import GetInTouchSection from '../components/GetInTouchSection.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Services data
+const servicesData = [
+  {
+    id: "one",
+    title: "Brand identity",
+    description: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
+    image: "/template/assets/images/services/services-img-1.jpg"
+  },
+  {
+    id: "two", 
+    title: "Web development",
+    description: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
+    image: "/template/assets/images/services/services-img-2.jpg"
+  },
+  {
+    id: "three",
+    title: "Content creation", 
+    description: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
+    image: "/template/assets/images/services/services-img-3.jpg"
+  },
+  {
+    id: "four",
+    title: "Motion & 3d modeling",
+    description: "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
+    image: "/template/assets/images/services/services-img-4.jpg"
+  }
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title="صفحه اصلی" description="AI-powered, lean business stacks">
+  <BannerSection />
+  <StatsFactsSection />
+  <FeaturedProjectsSection />
+  <ServicesSection servicesData={servicesData} />
+  <WhyChooseUsSection />
+  <TestimonialSection />
+  <MeetOurTeamSection />
+  <PricingSection />
+  <FaqSection />
+  <RecentNewsSection />
+  <GetInTouchSection />
+</MainLayout>
