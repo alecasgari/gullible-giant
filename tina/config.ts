@@ -102,6 +102,56 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: "testimonial",
+        label: "Testimonials",
+        path: "content/testimonials",
+        fields: [
+          {
+            type: "string",
+            name: "name",
+            label: "Client Name",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "company",
+            label: "Company",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "quote",
+            label: "Testimonial Quote",
+            required: true,
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "image",
+            name: "avatar",
+            label: "Client Avatar",
+            required: true,
+          },
+          {
+            type: "number",
+            name: "rating",
+            label: "Rating (1-5)",
+            required: true,
+            min: 1,
+            max: 5,
+          },
+          {
+            type: "string",
+            name: "type",
+            label: "Card Type",
+            required: true,
+            options: ["primary", "dark", "light"],
+          },
+        ],
+      },
     ],
   },
 });
