@@ -21,7 +21,7 @@ export default defineConfig({
   },
   media: {
     tina: {
-      mediaRoot: "",
+      mediaRoot: "template/assets/images",
       publicFolder: "public",
     },
   },
@@ -104,25 +104,55 @@ export default defineConfig({
           {
             type: "string",
             name: "title",
-            label: "Title",
+            label: "Project Title",
             isTitle: true,
             required: true,
           },
           {
             type: "string",
-            name: "description",
-            label: "Description",
+            name: "excerpt",
+            label: "Short Description",
             required: true,
+            ui: {
+              component: "textarea",
+            },
           },
           {
             type: "image",
-            name: "image",
-            label: "Image",
+            name: "featuredImage",
+            label: "Featured Image",
             required: true,
           },
           {
+            type: "object",
+            name: "gallery",
+            label: "Image Gallery",
+            list: true,
+            fields: [
+              {
+                type: "image",
+                name: "image",
+                label: "Gallery Image",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "alt",
+                label: "Alt Text",
+                required: false,
+              },
+            ],
+          },
+          {
             type: "string",
-            name: "link",
+            name: "videoUrl",
+            label: "YouTube Video URL",
+            required: false,
+            description: "Leave empty to use default video",
+          },
+          {
+            type: "string",
+            name: "projectLink",
             label: "Project Link",
             required: true,
           },
@@ -132,13 +162,13 @@ export default defineConfig({
             label: "Category",
             required: true,
             options: [
-              "UX Strategy",
-              "UI Design", 
-              "Web development",
-              "Digital design",
-              "Brand identity",
-              "Photography",
-              "Studio"
+              "AI Automation",
+              "CRM Setup", 
+              "Email Marketing",
+              "Data Migration",
+              "System Integration",
+              "Web Development",
+              "Consulting"
             ],
           },
           {
@@ -147,6 +177,65 @@ export default defineConfig({
             label: "Tags",
             list: true,
             required: true,
+          },
+          {
+            type: "rich-text",
+            name: "description",
+            label: "Full Description",
+            required: true,
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "datetime",
+            name: "projectDate",
+            label: "Project Completion Date",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "clientName",
+            label: "Client Name",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "clientCompany",
+            label: "Client Company",
+            required: false,
+          },
+          {
+            type: "string",
+            name: "technologies",
+            label: "Technologies Used",
+            list: true,
+            required: false,
+          },
+          {
+            type: "string",
+            name: "duration",
+            label: "Project Duration",
+            required: false,
+            description: "e.g., 2 weeks, 1 month",
+          },
+          {
+            type: "string",
+            name: "status",
+            label: "Project Status",
+            required: true,
+            options: [
+              "Completed",
+              "In Progress",
+              "On Hold",
+              "Cancelled"
+            ],
+          },
+          {
+            type: "boolean",
+            name: "featured",
+            label: "Featured Project",
+            required: false,
           },
         ],
       },

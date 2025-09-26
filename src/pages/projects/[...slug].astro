@@ -1,0 +1,277 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+import MainLayout from '../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+  const { data } = await client.queries.projectConnection();
+  const paths = data.projectConnection.edges.map((edge) => ({
+    params: { slug: edge.node._sys.filename },
+  }));
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const { data, query, variables } = await client.queries.project({
+  relativePath: `${slug}.md`,
+});
+
+// Default video URL
+const defaultVideoUrl = "https://youtu.be/fd314BuABLs";
+const videoUrl = data.project.videoUrl || defaultVideoUrl;
+---
+
+<MainLayout title={data.project.title} description={data.project.excerpt}>
+  <!-- Project Hero Section -->
+  <section class="project-hero py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-10 col-xxl-8">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <div class="d-flex align-items-center gap-3">
+              <span class="badge text-bg-primary">{data.project.category}</span>
+              <span class="badge text-bg-secondary">{data.project.status}</span>
+              {data.project.featured && (
+                <span class="badge bg-warning text-dark">Featured</span>
+              )}
+            </div>
+            <h1 class="mb-0">{data.project.title}</h1>
+            <p class="fs-5 mb-0 text-opacity-70">{data.project.excerpt}</p>
+            <div class="d-flex flex-column flex-md-row gap-4">
+              <div class="d-flex align-items-center gap-3">
+                <iconify-icon icon="solar:user-bold" class="fs-6 text-primary"></iconify-icon>
+                <div>
+                  <h6 class="mb-0">{data.project.clientName}</h6>
+                  {data.project.clientCompany && (
+                    <p class="mb-0 text-opacity-70 small">{data.project.clientCompany}</p>
+                  )}
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <iconify-icon icon="solar:calendar-bold" class="fs-6 text-primary"></iconify-icon>
+                <div>
+                  <h6 class="mb-0">Completed</h6>
+                  <p class="mb-0 text-opacity-70 small">{new Date(data.project.projectDate).toLocaleDateString()}</p>
+                </div>
+              </div>
+              {data.project.duration && (
+                <div class="d-flex align-items-center gap-3">
+                  <iconify-icon icon="solar:clock-circle-bold" class="fs-6 text-primary"></iconify-icon>
+                  <div>
+                    <h6 class="mb-0">Duration</h6>
+                    <p class="mb-0 text-opacity-70 small">{data.project.duration}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Image -->
+  <section class="project-featured-image py-4">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <img src={data.project.featuredImage} alt={data.project.title} class="img-fluid w-100 rounded-3 project-featured-img" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="project-video py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="video-container position-relative" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <div class="ratio ratio-16x9">
+              <iframe 
+                src={`https://www.youtube.com/embed/${videoUrl.split('v=')[1] || videoUrl.split('/').pop()}?autoplay=0&mute=1&controls=1`}
+                title={data.project.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Content -->
+  <section class="project-content py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="project-details" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-4">Project Details</h2>
+            <div class="project-description">
+              <TinaMarkdown content={data.project.description} />
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="project-sidebar" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+            <div class="sidebar-card p-4 bg-light rounded-3 mb-4">
+              <h5 class="mb-3">Project Info</h5>
+              <div class="d-flex flex-column gap-3">
+                <div>
+                  <h6 class="mb-1">Category</h6>
+                  <p class="mb-0 text-opacity-70">{data.project.category}</p>
+                </div>
+                <div>
+                  <h6 class="mb-1">Status</h6>
+                  <p class="mb-0 text-opacity-70">{data.project.status}</p>
+                </div>
+                <div>
+                  <h6 class="mb-1">Client</h6>
+                  <p class="mb-0 text-opacity-70">{data.project.clientName}</p>
+                </div>
+                <div>
+                  <h6 class="mb-1">Date</h6>
+                  <p class="mb-0 text-opacity-70">{new Date(data.project.projectDate).toLocaleDateString()}</p>
+                </div>
+                {data.project.duration && (
+                  <div>
+                    <h6 class="mb-1">Duration</h6>
+                    <p class="mb-0 text-opacity-70">{data.project.duration}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {data.project.technologies && data.project.technologies.length > 0 && (
+              <div class="sidebar-card p-4 bg-light rounded-3 mb-4">
+                <h5 class="mb-3">Technologies</h5>
+                <div class="d-flex flex-wrap gap-2">
+                  {data.project.technologies.map(tech => (
+                    <span class="badge text-bg-primary">{tech}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div class="sidebar-card p-4 bg-light rounded-3 mb-4">
+              <h5 class="mb-3">Tags</h5>
+              <div class="d-flex flex-wrap gap-2">
+                {data.project.tags.map(tag => (
+                  <span class="badge text-dark border">{tag}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="sidebar-card p-4 bg-primary rounded-3">
+              <h5 class="mb-3 text-white">View Project</h5>
+              <p class="mb-3 text-white text-opacity-70">Check out the live project and see the results for yourself.</p>
+              <a href={data.project.projectLink} class="btn btn-light w-100" target="_blank">
+                Visit Project
+                <iconify-icon icon="lucide:external-link" class="ms-2"></iconify-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Gallery -->
+  {data.project.gallery && data.project.gallery.length > 0 && (
+    <section class="project-gallery py-5 py-lg-11 py-xl-12 bg-light-gray">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10">
+            <h2 class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">Project Gallery</h2>
+            <div class="row">
+              {data.project.gallery.map((image, index) => (
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="gallery-item" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
+                    <img src={image.image} alt={image.alt || data.project.title} class="img-fluid w-100 rounded-3">
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="project-cta py-5 py-lg-11 py-xl-12 bg-dark">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-0 text-white">Ready to Start Your Project?</h2>
+            <p class="fs-5 mb-0 text-white text-opacity-70">
+              Let's discuss how we can help you achieve similar results for your business.
+            </p>
+            <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+              <a href="https://calendar.app.google/twixZsNv5j4jvbuz6" class="btn" target="_blank">
+                <span class="btn-text">Book a Discovery Call</span>
+                <iconify-icon icon="lucide:arrow-up-right" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
+              </a>
+              <a href="http://calculator.alecasgari.com/" class="btn border border-white" target="_blank">
+                <span class="btn-text">Calculate Your Savings</span>
+                <iconify-icon icon="lucide:calculator" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .project-featured-img {
+    max-height: 500px;
+    object-fit: cover;
+  }
+  
+  .video-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .project-description {
+    line-height: 1.8;
+  }
+  
+  .project-description h1, .project-description h2, .project-description h3, .project-description h4, .project-description h5, .project-description h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .project-description p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .project-description img {
+    border-radius: 8px;
+    margin: 2rem 0;
+  }
+  
+  .sidebar-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .gallery-item {
+    transition: transform 0.3s ease;
+  }
+  
+  .gallery-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  @media (max-width: 768px) {
+    .project-featured-img {
+      max-height: 300px;
+    }
+  }
+</style>

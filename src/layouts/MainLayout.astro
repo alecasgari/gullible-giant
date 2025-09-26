@@ -15,10 +15,29 @@ const { title = "Studiova", description = "We create high-performing digital des
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="google-site-verification" content="your-verification-code-here" />
   <link rel="shortcut icon" type="image/png" href="/template/assets/images/logos/favicon.svg" />
   <link rel="stylesheet" href="/template/assets/libs/owl.carousel/dist/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="/template/assets/libs/aos-master/dist/aos.css">
   <link rel="stylesheet" href="/template/assets/css/styles.css" />
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WLLGGB4P');</script>
+  <!-- End Google Tag Manager -->
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81C6JE60BQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-81C6JE60BQ');
+  </script>
+  
   <style>
     .logo-img {
       height: 40px;
@@ -48,6 +67,10 @@ const { title = "Studiova", description = "We create high-performing digital des
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLLGGB4P"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <!-- Header -->
   <header class="header border-4 border-primary border-top position-fixed start-0 top-0 w-100">
@@ -150,13 +173,17 @@ const { title = "Studiova", description = "We create high-performing digital des
             <h2 class="mb-0 text-white">Build something together?</h2>
             <div class="d-flex flex-column gap-2">
               <a href="mailto:hello@alecasgari.com" class="link-hover hstack gap-3 text-white fs-5">
-                <iconify-icon icon="lucide:arrow-up-right" class="fs-7 text-primary"></iconify-icon>
+                <iconify-icon icon="lucide:mail" class="fs-7 text-primary"></iconify-icon>
                 hello@alecasgari.com
+              </a>
+              <a href="tel:+971504302948" class="link-hover hstack gap-3 text-white fs-5">
+                <iconify-icon icon="lucide:phone" class="fs-7 text-primary"></iconify-icon>
+                +971 50 430 2948
               </a>
               <a href="https://maps.app.goo.gl/hpDp81fqzGt5y4bC8" target="_blank"
                 class="link-hover hstack gap-3 text-white fs-5">
                 <iconify-icon icon="lucide:map-pin" class="fs-7 text-primary"></iconify-icon>
-                Dubai, United Arab Emirates
+                No1409, Regal Tower, Business Bay, Dubai, UAE
               </a>
             </div>
           </div>
