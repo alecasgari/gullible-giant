@@ -1,7 +1,7 @@
 ---
-name: Alec Asgari
-position: Marketing Strategist
-image: /template/assets/images/team/team-img-2.jpg
+name: Maha Kamani
+position: 'Brand Manager '
+image: /template/assets/images/1758951406359.png
 twitter: '#'
 behance: '#'
 linkedin: '#'
