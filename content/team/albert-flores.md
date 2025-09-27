@@ -1,8 +1,9 @@
 ---
-name: Albert Flores
-position: UX/UI Developer
-image: /template/assets/images/team/team-img-4.jpg
-twitter: "#"
-behance: "#"
-linkedin: "#"
+name: Alec Asgari
+position: Founder and CEO
+image: /template/assets/images/1758951413377.png
+twitter: '#'
+behance: '#'
+linkedin: '#'
 ---
+
