@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "postinstall": "node ./node_modules/@tinacms/cli/dist/index.js build",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
