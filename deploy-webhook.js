@@ -1,8 +1,13 @@
 import express from 'express';
 import { exec } from 'child_process';
+import crypto from 'node:crypto';
 
 const app = express();
-app.use(express.json());
+app.use(express.json({
+  verify: (req, _res, buf) => {
+    req.rawBody = buf;
+  }
+}));
 
 // Config via env
 const PORT = process.env.PORT || 3000;
@@ -24,10 +29,21 @@ function run(cmd) {
 
 app.post('/deploy', async (req, res) => {
   try {
-    // Basic auth using shared secret header
-    const provided = req.headers['x-webhook-secret'];
-    if (!WEBHOOK_SECRET || provided !== WEBHOOK_SECRET) {
-      return res.status(401).json({ success: false, error: 'unauthorized' });
+    // Verify HMAC signature from GitHub if present
+    const ghSig = req.headers['x-hub-signature-256'];
+    let authorized = false;
+    if (ghSig && typeof ghSig === 'string') {
+      const expected =
+        'sha256=' +
+        crypto.createHmac('sha256', WEBHOOK_SECRET).update(req.rawBody || Buffer.from('')).digest('hex');
+      try { authorized = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(ghSig)); } catch { authorized = false; }
+    }
+    // Fallback to simple header secret for manual curl
+    if (!authorized) {
+      const provided = req.headers['x-webhook-secret'];
+      if (!WEBHOOK_SECRET || provided !== WEBHOOK_SECRET) {
+        return res.status(401).json({ success: false, error: 'unauthorized' });
+      }
     }
 
     console.log('🚀 Deploy webhook triggered', new Date().toISOString());
@@ -36,9 +52,7 @@ app.post('/deploy', async (req, res) => {
     const cmd = [
       `cd ${REPO_DIR}`,
       'git pull origin main',
-      // Tina Cloud build first (needs envs)
       `docker run --rm -v "$PWD":/app -w /app -e NEXT_PUBLIC_TINA_CLIENT_ID=${TINA_CLIENT_ID} -e TINA_TOKEN=${TINA_TOKEN} node:20 npx -y tinacms build`,
-      // Astro static build
       'docker run --rm -v "$PWD":/app -w /app node:20 npm run build'
     ].join(' && ');
 
