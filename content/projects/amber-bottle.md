@@ -3,11 +3,11 @@ image: /template/assets/images/team/team-img-4.jpg
 link: /projects-detail
 title: Blockchain Legals
 excerpt: THE FIRST CRYPTO NATIVE INTERNATIONAL LAW AGENCY
-featuredImage: /template/assets/images/Screenshot 2025-09-28 143232.png
+featuredImage: /Projects/Screenshot 2025-09-28 143232.png
 gallery:
-  - image: /template/assets/images/Screenshot 2025-09-28 143341.png
-  - image: /template/assets/images/Screenshot 2025-09-28 143302.png
-  - image: /template/assets/images/Screenshot 2025-09-28 143255.png
+  - image: /Projects/Screenshot%202025-09-28%20143255.png
+  - image: /Projects/Screenshot%202025-09-28%20143302.png
+  - image: /Projects/Screenshot%202025-09-28%20143341.png
 projectLink: 'https://blockchainlegals.com/'
 category: Web Development
 tags:
