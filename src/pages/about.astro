@@ -1,6 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { client } from '../../tina/__generated__/client';
+import client from 'tina-client';
 
 // Fetch team members for about page
 const { data } = await client.queries.teamConnection();
