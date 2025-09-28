@@ -1,12 +1,12 @@
 ---
 title: Future Innovation Summit - DFISX
 excerpt: Region's Largest Innovation Focused Conference & Exhibition
-featuredImage: /template/assets/images/dfisx.png
+featuredImage: /Projects/Screenshot%202025-09-28%20143002.png
 gallery:
-  - image: /template/assets/images/image-2023-06-23T122217.544.webp
-  - image: /template/assets/images/image-86-1.webp
-  - image: /template/assets/images/Screenshot 2025-09-28 143018.png
-  - image: /template/assets/images/Screenshot 2025-09-28 143002.png
+  - image: /Projects/Screenshot%202025-09-28%20143018.png
+  - image: /Projects/dfisx.png
+  - image: /Projects/image-86-1.webp
+  - image: /Projects/image-2023-06-23T122217.544.webp
 videoUrl: 'https://youtu.be/9uWCDHX_5oc'
 projectLink: 'https://dfisx.com/'
 category: AI Automation
