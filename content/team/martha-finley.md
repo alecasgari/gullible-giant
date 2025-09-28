@@ -1,7 +1,7 @@
 ---
 name: Aynaz Mardani
 position: Graphic Designer
-image: /template/assets/images/aynaz-mardani.jpg
+image: /1758952004996.png
 twitter: '#'
 behance: '#'
 linkedin: '#'
