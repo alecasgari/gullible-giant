@@ -48,12 +48,12 @@ app.post('/deploy', async (req, res) => {
 
     console.log('🚀 Deploy webhook triggered', new Date().toISOString());
 
-    // Build using Dockerized Node to avoid local Node dependency
+    // Build inside host using local Node (fewer Docker deps)
     const cmd = [
       `cd ${REPO_DIR}`,
       'git pull origin main',
-      `docker run --rm -v "$PWD":/app -w /app -e NEXT_PUBLIC_TINA_CLIENT_ID=${TINA_CLIENT_ID} -e TINA_TOKEN=${TINA_TOKEN} node:20 npx -y tinacms build`,
-      'docker run --rm -v "$PWD":/app -w /app node:20 npm run build'
+      `NEXT_PUBLIC_TINA_CLIENT_ID=${TINA_CLIENT_ID} TINA_TOKEN=${TINA_TOKEN} npx -y tinacms build`,
+      'npm run build'
     ].join(' && ');
 
     const { stdout, stderr } = await run(cmd);
