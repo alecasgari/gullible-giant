@@ -51,6 +51,7 @@ app.post('/deploy', async (req, res) => {
     // Build inside host using local Node (fewer Docker deps)
     const cmd = [
       `cd ${REPO_DIR}`,
+      `git config --global --add safe.directory ${REPO_DIR}`,
       'git pull origin main',
       `NEXT_PUBLIC_TINA_CLIENT_ID=${TINA_CLIENT_ID} TINA_TOKEN=${TINA_TOKEN} npx -y tinacms build`,
       'npm run build'
