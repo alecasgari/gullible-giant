@@ -17,7 +17,7 @@ const categories = [...new Set(projects.map(project => project.category))];
       <div class="row justify-content-center">
         <div class="col-xl-8 col-xxl-7 text-center">
           <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
-            <h1 class="mb-0">Our Projects</h1>
+            <h1 class="mb-0 fs-10">Our Projects</h1>
             <p class="fs-5 mb-0 text-opacity-70">
               Discover our portfolio of successful projects. Each project represents our commitment to excellence and innovation.
             </p>
@@ -30,9 +30,9 @@ const categories = [...new Set(projects.map(project => project.category))];
   <!-- Projects Filter -->
   <section class="projects-filter py-5">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xl-8">
-          <div class="d-flex flex-wrap gap-3 justify-content-center" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+      <div class="row">
+        <div class="col-12">
+          <div class="filter-buttons-container" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
             <button class="btn btn-outline-primary filter-btn active" data-filter="all">All Projects</button>
             {categories.map(category => (
               <button class="btn btn-outline-primary filter-btn" data-filter={category.toLowerCase().replace(/\s+/g, '-')}>
@@ -137,18 +137,45 @@ const categories = [...new Set(projects.map(project => project.category))];
 </MainLayout>
 
 <style>
-  .filter-btn {
-    transition: all 0.3s ease;
+  .filter-buttons-container {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bs-primary) transparent;
+  }
+  
+  .filter-buttons-container::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .filter-buttons-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .filter-buttons-container::-webkit-scrollbar-thumb {
     background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: white;
+    border-radius: 2px;
+  }
+  
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border: 1px solid var(--bs-primary);
+    color: #333;
+    white-space: nowrap;
   }
   
   .filter-btn:hover {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
     color: white;
-    opacity: 0.9;
   }
   
   .filter-btn.active {

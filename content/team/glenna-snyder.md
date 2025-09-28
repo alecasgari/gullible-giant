@@ -1,8 +1,9 @@
 ---
-name: Glenna Snyder
-position: Lead Designer
-image: /template/assets/images/team/team-img-3.jpg
-twitter: "#"
-behance: "#"
-linkedin: "#"
+name: Mo Mosleh
+position: CRM Manager
+image: /template/assets/images/mo-mosleh.jpg
+twitter: '#'
+behance: '#'
+linkedin: 'https://www.linkedin.com/in/mahshidkamangari/'
 ---
+

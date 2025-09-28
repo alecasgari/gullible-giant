@@ -15,13 +15,16 @@ export default defineConfig({
   // Get this from tina.io
   token: process.env.TINA_TOKEN,
 
+  // Enable local-only mode for development
+  // localContentPath: '../content',
+
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
   media: {
     tina: {
-      mediaRoot: "template/assets/images",
+      mediaRoot: "",
       publicFolder: "public",
     },
   },

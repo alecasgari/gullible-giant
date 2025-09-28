@@ -89,9 +89,9 @@ const { servicesData } = Astro.props;
                   </li>
                 ))}
               </ul>
-              <a href="/projects" class="btn border border-white border-opacity-25" data-aos="fade-up"
-                data-aos-delay="300" data-aos-duration="1000">
-                <a href="https://calendar.app.google/twixZsNv5j4jvbuz6" class="btn-text text-decoration-none" target="_blank">Book a Discovery Call</a>
+              <a href="https://calendar.app.google/twixZsNv5j4jvbuz6" class="btn border border-white border-opacity-25 text-white" data-aos="fade-up"
+                data-aos-delay="300" data-aos-duration="1000" target="_blank">
+                <span class="btn-text text-white">Book a Discovery Call</span>
                 <iconify-icon icon="lucide:arrow-up-right"
                   class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
               </a>
@@ -102,3 +102,27 @@ const { servicesData } = Astro.props;
     </div>
   </div>
 </section>
+
+<style>
+  /* Fix CTA button contrast */
+  .services .btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+  
+  .services .btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px);
+  }
+  
+  .services .btn-text {
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+  
+  .services .btn:hover .btn-text {
+    color: #ffffff !important;
+  }
+</style>

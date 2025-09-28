@@ -62,3 +62,21 @@
     <img src="/template/assets/images/backgrounds/stats-facts-bg.svg" alt="" class="img-fluid">
   </div>
 </section>
+
+<style>
+  /* Fix z-index for calculator button */
+  .stats-facts .btn {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+  }
+  
+  .stats-facts .position-absolute {
+    z-index: 1;
+  }
+  
+  .stats-facts .container {
+    position: relative;
+    z-index: 5;
+  }
+</style>

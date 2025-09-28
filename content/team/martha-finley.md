@@ -1,8 +1,9 @@
 ---
-name: Martha Finley
-position: Creative Director
-image: /template/assets/images/team/team-img-1.jpg
-twitter: "#"
-behance: "#"
-linkedin: "#"
+name: Aynaz Mardani
+position: Graphic Designer
+image: /template/assets/images/aynaz-mardani.jpg
+twitter: '#'
+behance: '#'
+linkedin: '#'
 ---
+

@@ -2,9 +2,10 @@
 export interface Props {
   title?: string;
   description?: string;
+  class?: string;
 }
 
-const { title = "Studiova", description = "We create high-performing digital designs that elevate brands and enhance conversions." } = Astro.props;
+const { title = "Alec Asgari - 18 Years of IT Industry Experience", description = "Alec Asgari with 18 years of experience in the IT industry, specializing in AI automation, CRM setup, and digital transformation solutions.", class: bodyClass } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,6 +17,21 @@ const { title = "Studiova", description = "We create high-performing digital des
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="google-site-verification" content="your-verification-code-here" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://alecasgari.com/" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="/template/assets/images/hero-slider/hero-1.jpg" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://alecasgari.com/" />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content="/template/assets/images/hero-slider/hero-1.jpg" />
+  
   <link rel="shortcut icon" type="image/png" href="/template/assets/images/logos/favicon.svg" />
   <link rel="stylesheet" href="/template/assets/libs/owl.carousel/dist/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="/template/assets/libs/aos-master/dist/aos.css">
@@ -63,10 +79,50 @@ const { title = "Studiova", description = "We create high-performing digital des
         height: 35px;
       }
     }
+    
+    /* Fix mobile header overlap on non-home pages */
+    @media (max-width: 991.98px) {
+      body:not(.home-page) .header {
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1050;
+      }
+      
+      body:not(.home-page) .page-wrapper {
+        padding-top: 80px;
+      }
+      
+      body:not(.home-page) .logo-white {
+        display: none;
+      }
+      
+      body:not(.home-page) .logo-dark {
+        display: block;
+      }
+    }
+    
+    /* Header scroll behavior for all pages except home */
+    body:not(.home-page) .header {
+      transition: all 0.3s ease;
+    }
+    
+    body:not(.home-page) .header.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    body:not(.home-page) .header.scrolled .logo-white {
+      display: none;
+    }
+    
+    body:not(.home-page) .header.scrolled .logo-dark {
+      display: block;
+    }
   </style>
 </head>
 
-<body>
+<body class={bodyClass}>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLLGGB4P"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -138,12 +194,12 @@ const { title = "Studiova", description = "We create high-performing digital des
                     </li>
                   </ul>
                   <div class="hstack gap-3">
-                    <a href="/sign-in"
-                      class="btn btn-outline-light fs-6 bg-white px-3 py-2 text-dark w-50 hstack justify-content-center">Sign
-                      In</a>
-                    <a href="/sign-up"
-                      class="btn btn-dark text-white fs-6 bg-dark px-3 py-2 w-50 hstack justify-content-center">Sign
-                      Up</a>
+                    <a href="/admin"
+                      class="btn btn-outline-light fs-6 bg-white px-3 py-2 text-dark w-50 hstack justify-content-center">Login
+                      </a>
+                    <a href="/admin"
+                      class="btn btn-dark text-white fs-6 bg-dark px-3 py-2 w-50 hstack justify-content-center">Register
+                      </a>
                   </div>
                 </div>
                 <div>
@@ -227,6 +283,27 @@ const { title = "Studiova", description = "We create high-performing digital des
   <script src="/template/assets/js/custom.js" is:inline></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js" is:inline></script>
+  
+  <!-- Header scroll behavior -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('.header');
+      
+      // Only apply scroll behavior to non-home pages
+      if (!document.body.classList.contains('home-page')) {
+        function handleScroll() {
+          if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        }
+        
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Check initial state
+      }
+    });
+  </script>
 </body>
 
 </html>

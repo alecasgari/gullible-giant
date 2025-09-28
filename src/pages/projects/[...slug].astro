@@ -40,7 +40,7 @@ const videoUrl = data.project.videoUrl || defaultVideoUrl;
                 <span class="badge bg-warning text-dark">Featured</span>
               )}
             </div>
-            <h1 class="mb-0">{data.project.title}</h1>
+            <h1 class="mb-0 fs-9">{data.project.title}</h1>
             <p class="fs-5 mb-0 text-opacity-70">{data.project.excerpt}</p>
             <div class="d-flex flex-column flex-md-row gap-4">
               <div class="d-flex align-items-center gap-3">
@@ -153,7 +153,7 @@ const videoUrl = data.project.videoUrl || defaultVideoUrl;
                 <h5 class="mb-3 text-white">Technologies</h5>
                 <div class="d-flex flex-wrap gap-2">
                   {data.project.technologies.map(tech => (
-                    <span class="badge text-bg-primary text-white">{tech}</span>
+                    <span class="badge text-bg-primary text-dark">{tech}</span>
                   ))}
                 </div>
               </div>
@@ -169,8 +169,8 @@ const videoUrl = data.project.videoUrl || defaultVideoUrl;
             </div>
 
             <div class="sidebar-card p-4 bg-primary rounded-3">
-              <h5 class="mb-3 text-white">Live Project</h5>
-              <p class="mb-3 text-white text-opacity-70">Check out the live project and see the results for yourself.</p>
+              <h5 class="mb-3 text-dark">Live Project</h5>
+              <p class="mb-3 text-dark text-opacity-70">Check out the live project and see the results for yourself.</p>
               <a href={data.project.projectLink} class="btn btn-light w-100" target="_blank">
                 Visit Live Project
                 <iconify-icon icon="lucide:external-link" class="ms-2"></iconify-icon>
@@ -216,13 +216,11 @@ const videoUrl = data.project.videoUrl || defaultVideoUrl;
           <img id="galleryModalImage" src="" alt="" class="img-fluid rounded-3">
         </div>
         <div class="modal-footer border-0 justify-content-center">
-          <button type="button" class="btn btn-outline-light" id="prevImage">
-            <iconify-icon icon="lucide:chevron-left" class="me-2"></iconify-icon>
-            Previous
+          <button type="button" class="btn border-0 bg-transparent" id="prevImage">
+            <iconify-icon icon="lucide:chevron-left" class="text-white"></iconify-icon>
           </button>
-          <button type="button" class="btn btn-outline-light" id="nextImage">
-            Next
-            <iconify-icon icon="lucide:chevron-right" class="ms-2"></iconify-icon>
+          <button type="button" class="btn border-0 bg-transparent" id="nextImage">
+            <iconify-icon icon="lucide:chevron-right" class="text-white"></iconify-icon>
           </button>
         </div>
       </div>
