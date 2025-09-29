@@ -37,7 +37,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         <div class="col-xl-8">
           <div class="contact-form-wrapper" data-aos="fade-right" data-aos-delay="100" data-aos-duration="1000">
             <h2 class="mb-6">Send us a message</h2>
-            <form class="d-flex flex-column gap-4">
+            <form id="contactForm" class="d-flex flex-column gap-4">
               <div class="row gap-4 gap-lg-0">
                 <div class="col-lg-6">
                   <div class="form-group">
@@ -93,7 +93,10 @@ import MainLayout from '../layouts/MainLayout.astro';
                   </label>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary px-5 py-3">Send Message</button>
+              <button type="submit" class="btn btn-primary px-5 py-3" id="submitBtn">
+                <span class="btn-text">Send Message</span>
+                <iconify-icon icon="lucide:arrow-up-right" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
+              </button>
             </form>
           </div>
         </div>
@@ -215,3 +218,99 @@ import MainLayout from '../layouts/MainLayout.astro';
     box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(form);
+      const data = {
+        form_id: 'contact-01',
+        form_name: 'Contact Page Form',
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        company: formData.get('company'),
+        service: formData.get('service'),
+        message: formData.get('message'),
+        privacy: formData.get('privacy'),
+        utm_source: new URLSearchParams(window.location.search).get('utm_source') || 'website',
+        utm_medium: new URLSearchParams(window.location.search).get('utm_medium') || 'organic',
+        utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || 'contact_form',
+        utm_term: new URLSearchParams(window.location.search).get('utm_term') || '',
+        utm_content: new URLSearchParams(window.location.search).get('utm_content') || '',
+        page_url: window.location.href,
+        timestamp: new Date().toISOString()
+      };
+      
+      // Update button text
+      submitBtn.innerHTML = '<span class="btn-text">Sending...</span><iconify-icon icon="lucide:loader-2" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm animate-spin"></iconify-icon>';
+      submitBtn.disabled = true;
+      
+      try {
+        console.log('Sending data to webhook:', data);
+        
+        // Convert data to URL parameters for GET request
+        const params = new URLSearchParams();
+        Object.keys(data).forEach(key => {
+          if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+            params.append(key, String(data[key]));
+          }
+        });
+        
+        const webhookUrl = `https://n8n.alecasgari.com/webhook/3d5997cf-3089-46fd-91e2-1183043092c4?${params.toString()}`;
+        console.log('Webhook URL:', webhookUrl);
+        
+        const response = await fetch(webhookUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+          mode: 'cors'
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        const responseText = await response.text();
+        console.log('Response body:', responseText);
+        
+        if (response.ok || response.status === 200) {
+          // Success - redirect to thank you page with form data
+          const params = new URLSearchParams({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone || '',
+            company: data.company || '',
+            service: data.service || '',
+            message: data.message,
+            timestamp: data.timestamp
+          });
+          
+          window.location.href = `/thank-you?${params.toString()}`;
+        } else {
+          throw new Error(`HTTP ${response.status}: ${responseText}`);
+        }
+      } catch (error) {
+        console.error('Detailed error:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        
+        submitBtn.innerHTML = '<span class="btn-text">Error - Try Again</span><iconify-icon icon="lucide:x" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>';
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+          submitBtn.innerHTML = '<span class="btn-text">Send Message</span><iconify-icon icon="lucide:arrow-up-right" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>';
+          submitBtn.disabled = false;
+        }, 3000);
+      }
+    });
+  });
+</script>

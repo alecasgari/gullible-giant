@@ -1,0 +1,263 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Thank You - Message Received" description="Thank you for contacting us. We have received your message and will get back to you soon.">
+  <!-- Thank You Hero Section -->
+  <section class="thank-you-hero py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <div class="success-icon mx-auto">
+              <iconify-icon icon="lucide:check-circle" class="fs-1 text-success"></iconify-icon>
+            </div>
+            <h1 class="mb-0 fs-9">Thank You!</h1>
+            <p class="fs-5 mb-0 text-opacity-70">
+              Your message has been successfully sent. We have received your information and will get back to you as soon as possible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Message Details Section -->
+  <section class="message-details py-5 py-lg-11 py-xl-12">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7">
+          <div class="card shadow-sm" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+            <div class="card-body p-5">
+              <h2 class="mb-4">Message Details</h2>
+              <div id="messageDetails" class="d-flex flex-column gap-3">
+                <!-- Message details will be populated by JavaScript -->
+              </div>
+              
+              <hr class="my-4">
+              
+              <div class="alert alert-info" role="alert">
+                <div class="d-flex align-items-start gap-3">
+                  <iconify-icon icon="lucide:info" class="fs-5 text-info mt-1"></iconify-icon>
+                  <div>
+                    <h6 class="alert-heading mb-2">Important Notes:</h6>
+                    <ul class="mb-0">
+                      <li>Please check your <strong>junk/spam folder</strong> for our response</li>
+                      <li>We typically respond within 24 hours during business days</li>
+                      <li>If you don't receive a response, please contact us directly at <a href="mailto:hello@alecasgari.com" class="text-decoration-none">hello@alecasgari.com</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                <a href="/" class="btn btn-primary">
+                  <span class="btn-text">Back to Home</span>
+                  <iconify-icon icon="lucide:home" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
+                </a>
+                <a href="/contact" class="btn btn-outline-primary">
+                  <span class="btn-text">Send Another Message</span>
+                  <iconify-icon icon="lucide:message-circle" class="btn-icon bg-primary text-white round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next Steps Section -->
+  <section class="next-steps py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-xxl-7 text-center">
+          <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-0">What Happens Next?</h2>
+            <div class="row gap-4">
+              <div class="col-md-4">
+                <div class="d-flex flex-column gap-3">
+                  <div class="step-icon mx-auto">
+                    <iconify-icon icon="lucide:mail" class="fs-2 text-primary"></iconify-icon>
+                  </div>
+                  <h5>1. We Review Your Message</h5>
+                  <p class="text-opacity-70 mb-0">Our team carefully reviews your inquiry and requirements.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-flex flex-column gap-3">
+                  <div class="step-icon mx-auto">
+                    <iconify-icon icon="lucide:phone" class="fs-2 text-primary"></iconify-icon>
+                  </div>
+                  <h5>2. We Contact You</h5>
+                  <p class="text-opacity-70 mb-0">We'll reach out via email or phone to discuss your project.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-flex flex-column gap-3">
+                  <div class="step-icon mx-auto">
+                    <iconify-icon icon="lucide:handshake" class="fs-2 text-primary"></iconify-icon>
+                  </div>
+                  <h5>3. We Start Working</h5>
+                  <p class="text-opacity-70 mb-0">Once we agree on the scope, we begin creating your solution.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(var(--bs-success-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .step-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 12px;
+  }
+  
+  .form-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .form-detail-item:last-child {
+    border-bottom: none;
+  }
+  
+  .form-detail-label {
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  .form-detail-value {
+    color: #6c757d;
+    text-align: right;
+    word-break: break-word;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get message details from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const messageDetails = document.getElementById('messageDetails');
+    
+    // Extract form data from URL parameters
+    const formData = {
+      firstName: urlParams.get('firstName') || '',
+      lastName: urlParams.get('lastName') || '',
+      name: urlParams.get('name') || '',
+      email: urlParams.get('email') || '',
+      phone: urlParams.get('phone') || '',
+      company: urlParams.get('company') || '',
+      service: urlParams.get('service') || '',
+      message: urlParams.get('message') || '',
+      timestamp: urlParams.get('timestamp') || new Date().toLocaleString()
+    };
+    
+    // Display form data
+    let detailsHTML = '';
+    
+    // Show name (either from contact form or home form)
+    if (formData.firstName && formData.lastName) {
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Name:</span>
+          <span class="form-detail-value">${formData.firstName} ${formData.lastName}</span>
+        </div>
+      `;
+    } else if (formData.name) {
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Name:</span>
+          <span class="form-detail-value">${formData.name}</span>
+        </div>
+      `;
+    }
+    
+    if (formData.email) {
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Email:</span>
+          <span class="form-detail-value">${formData.email}</span>
+        </div>
+      `;
+    }
+    
+    if (formData.phone) {
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Phone:</span>
+          <span class="form-detail-value">${formData.phone}</span>
+        </div>
+      `;
+    }
+    
+    if (formData.company) {
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Company:</span>
+          <span class="form-detail-value">${formData.company}</span>
+        </div>
+      `;
+    }
+    
+    if (formData.service) {
+      const serviceLabels = {
+        'web-design': 'Web Design',
+        'web-development': 'Web Development',
+        'ui-ux': 'UI/UX Design',
+        'branding': 'Branding',
+        'consultation': 'Consultation'
+      };
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Service:</span>
+          <span class="form-detail-value">${serviceLabels[formData.service] || formData.service}</span>
+        </div>
+      `;
+    }
+    
+    if (formData.message) {
+      detailsHTML += `
+        <div class="form-detail-item">
+          <span class="form-detail-label">Message:</span>
+          <span class="form-detail-value">${formData.message}</span>
+        </div>
+      `;
+    }
+    
+    detailsHTML += `
+      <div class="form-detail-item">
+        <span class="form-detail-label">Submitted:</span>
+        <span class="form-detail-value">${formData.timestamp}</span>
+      </div>
+    `;
+    
+    messageDetails.innerHTML = detailsHTML;
+  });
+</script>

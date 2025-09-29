@@ -74,6 +74,8 @@
       // Get form data
       const formData = new FormData(form);
       const data = {
+        form_id: 'home-01',
+        form_name: 'Home Contact Form',
         name: formData.get('name'),
         email: formData.get('email'),
         company: formData.get('company'),
@@ -92,29 +94,52 @@
       submitBtn.disabled = true;
       
       try {
-        const response = await fetch('https://n8n.alecasgari.com/webhook/3d5997cf-3089-46fd-91e2-1183043092c4', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
+        console.log('Sending data to webhook:', data);
+        
+        // Convert data to URL parameters for GET request
+        const params = new URLSearchParams();
+        Object.keys(data).forEach(key => {
+          if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+            params.append(key, String(data[key]));
+          }
         });
         
-        if (response.ok) {
-          // Success
-          submitBtn.innerHTML = '<span class="btn-text">Message Sent!</span><iconify-icon icon="lucide:check" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>';
-          form.reset();
+        const webhookUrl = `https://n8n.alecasgari.com/webhook/3d5997cf-3089-46fd-91e2-1183043092c4?${params.toString()}`;
+        console.log('Webhook URL:', webhookUrl);
+        
+        const response = await fetch(webhookUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+          mode: 'cors'
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        const responseText = await response.text();
+        console.log('Response body:', responseText);
+        
+        if (response.ok || response.status === 200) {
+          // Success - redirect to thank you page with form data
+          const params = new URLSearchParams({
+            name: data.name,
+            email: data.email,
+            company: data.company || '',
+            message: data.message,
+            timestamp: data.timestamp
+          });
           
-          // Reset button after 3 seconds
-          setTimeout(() => {
-            submitBtn.innerHTML = '<span class="btn-text">Submit message</span><iconify-icon icon="lucide:arrow-up-right" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>';
-            submitBtn.disabled = false;
-          }, 3000);
+          window.location.href = `/thank-you?${params.toString()}`;
         } else {
-          throw new Error('Failed to send message');
+          throw new Error(`HTTP ${response.status}: ${responseText}`);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Detailed error:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        
         submitBtn.innerHTML = '<span class="btn-text">Error - Try Again</span><iconify-icon icon="lucide:x" class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>';
         
         // Reset button after 3 seconds
