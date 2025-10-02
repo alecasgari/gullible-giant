@@ -11,8 +11,12 @@ gallery:
     alt: project-by-alec-asgari-nk-rent-cars (6).webp
   - image: /Projects/project-by-alec-asgari-nk-rent-cars%20(1).webp
     alt: project-by-alec-asgari-nk-rent-cars
-  - {}
-  - {}
+  - image: /Projects/project-by-alec-asgari-nk-rent-cars%20(2).webp
+    alt: project-by-alec-asgari-nk-rent-cars
+  - image: /Projects/project-by-alec-asgari-nk-rent-cars%20(3).webp
+    alt: project-by-alec-asgari-nk-rent-cars
+  - image: /Projects/project-by-alec-asgari-nk-rent-cars%20(4).webp
+    alt: project-by-alec-asgari-nk-rent-cars
 projectLink: >-
   https://dribbble.com/shots/24331869-Logo-Design-for-Car-Rental-Company-in-Dubai
 category: Web Development
