@@ -1,7 +1,7 @@
 ---
 image: /template/assets/images/team/team-img-4.jpg
 link: /projects-detail
-title: Blockchain Legals Project
+title: Blockchain Legals Portal
 excerpt: THE FIRST CRYPTO NATIVE INTERNATIONAL LAW AGENCY
 featuredImage: /Projects/Screenshot 2025-09-28 143232.png
 gallery:
