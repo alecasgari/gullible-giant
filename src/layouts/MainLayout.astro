@@ -18,6 +18,9 @@ const { title = "Alec Asgari - 18 Years of IT Industry Experience", description 
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="google-site-verification" content="your-verification-code-here" />
+  {Astro.url && (
+    <link rel="canonical" href={`https://alecasgari.com${Astro.url.pathname}${Astro.url.search || ''}`} />
+  )}
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />

@@ -19,6 +19,7 @@
     "tinacms": "^2.8.3"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.6.0",
     "@tinacms/cli": "^1.10.3",
     "@types/node": "^24.5.2"
   }

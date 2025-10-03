@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-json/
+Disallow: /cgi-sys/
+Disallow: /*/feed/
+Disallow: /comments/feed/
+Sitemap: https://alecasgari.com/sitemap-index.xml
