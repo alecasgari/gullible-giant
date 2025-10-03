@@ -2,6 +2,7 @@
 import client from 'tina-client';
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import MainLayout from '../../layouts/MainLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 
 // Fetch all projects for "Other Projects" section
 const { data: projectsData } = await client.queries.projectConnection();
@@ -233,36 +234,11 @@ const videoUrl = data.project.videoUrl || defaultVideoUrl;
       <div class="row justify-content-center">
         <div class="col-xl-10">
           <h2 class="text-center mb-5" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">Other Projects</h2>
-          <div class="row">
+          <div class="row g-4">
             {projects.filter(p => p._sys.filename !== data.project._sys.filename).slice(0, 3).map((project, index) => (
               <div class="col-md-6 col-lg-4 mb-4">
-                <div class="other-project-card" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
-                  <div class="card h-100 border-0 shadow-sm">
-                    <div class="position-relative overflow-hidden">
-                      <img src={project.featuredImage} alt={project.title} class="card-img-top" style="height: 200px; object-fit: cover;">
-                      <div class="position-absolute top-0 end-0 m-3">
-                        <span class="badge text-bg-primary">{project.category}</span>
-                      </div>
-                      {project.featured && (
-                        <div class="position-absolute top-0 start-0 m-3">
-                          <span class="badge bg-warning text-dark">Featured</span>
-                        </div>
-                      )}
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                      <h5 class="card-title">{project.title}</h5>
-                      <p class="card-text text-opacity-70 flex-grow-1">{project.excerpt}</p>
-                      <div class="d-flex flex-wrap gap-1 mb-3">
-                        {project.tags.slice(0, 2).map(tag => (
-                          <span class="badge text-dark border small">{tag}</span>
-                        ))}
-                      </div>
-                      <a href={`/projects/${project._sys.filename}`} class="btn btn-primary">
-                        View Project
-                        <iconify-icon icon="lucide:arrow-up-right" class="ms-2"></iconify-icon>
-                      </a>
-                    </div>
-                  </div>
+                <div class="other-project-card">
+                  <ProjectCard project={project} />
                 </div>
               </div>
             ))}

@@ -1,0 +1,46 @@
+---
+export interface Props {
+  post: any;
+}
+const { post } = Astro.props as Props;
+---
+
+<article class="post-card d-flex flex-column gap-3 h-100" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+  <div class="post-card-img position-relative overflow-hidden">
+    <div class="ratio ratio-16x9">
+      <img src={post.featuredImage} alt={post.title} class="img-cover" loading="lazy" decoding="async" />
+    </div>
+    <div class="post-card-overlay">
+      <a href={`/blog/${post._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">Read More</a>
+    </div>
+  </div>
+  <div class="post-card-content d-flex flex-column gap-3">
+    <div class="d-flex align-items-center gap-2">
+      {post.category && <span class="badge text-bg-primary">{post.category}</span>}
+      {post.publishDate && <span class="text-opacity-70 small">{new Date(post.publishDate).toLocaleDateString()}</span>}
+    </div>
+    <h3 class="mb-0 post-title">
+      <a href={`/blog/${post._sys.filename}`} class="text-decoration-none text-dark">{post.title}</a>
+    </h3>
+    <p class="mb-0 text-opacity-70 post-excerpt">{post.excerpt || (post.body?.children?.[0]?.children?.[0]?.text || '').substring(0, 120)}{!post.excerpt ? '…' : ''}</p>
+    <div class="d-flex align-items-center gap-3 mt-auto">
+      <img src="/template/assets/images/team/alec-asgari-author.webp" alt="Author" class="img-fluid rounded-circle" width="40" height="40" />
+      <div>
+        <h6 class="mb-0 fw-medium">{post.author}</h6>
+        <p class="mb-0 text-opacity-70 small">Author</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .post-card-img { border-radius: 12px; overflow: hidden; }
+  .post-card-content { padding: 1rem; }
+  @media (min-width: 992px) { .post-card-content { padding: 1.25rem; } }
+  .img-cover { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+  .post-card { border: 1px solid rgba(0,0,0,.08); box-shadow: 0 2px 8px rgba(0,0,0,.06); border-radius: 12px; background: #fff; }
+  .post-title { font-size: 1.5rem; line-height: 1.3; }
+  .post-excerpt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .post-card-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s ease; }
+  .post-card:hover .post-card-overlay { opacity: 1; }
+</style>

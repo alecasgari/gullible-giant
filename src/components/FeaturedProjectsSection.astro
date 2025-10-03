@@ -1,6 +1,7 @@
 ---
 // Featured Projects Section Component
 import { client } from '../../tina/__generated__/client';
+import ProjectCard from './ProjectCard.astro';
 
 // Fetch projects from TinaCMS
 const { data } = await client.queries.projectConnection();
@@ -39,40 +40,7 @@ const projects = data.projectConnection.edges.map(edge => edge.node);
       <div class="owl-carousel owl-theme">
         {projects.filter(project => project.featured).slice(0, 6).map((project, index) => (
           <div class="item">
-            <div class="portfolio d-flex flex-column gap-6">
-              <div class="portfolio-img position-relative overflow-hidden">
-                <img src={project.featuredImage} alt={project.title} class="img-fluid">
-                <div class="portfolio-overlay">
-                  <a href={`/projects/${project._sys.filename}`}
-                    class="position-absolute top-50 start-50 translate-middle bg-primary round-64 rounded-circle hstack justify-content-center">
-                    <iconify-icon icon="lucide:arrow-up-right" class="fs-8 text-dark"></iconify-icon>
-                  </a>
-                </div>
-                <div class="position-absolute top-0 end-0 m-3">
-                  <span class="badge bg-warning text-dark">Featured</span>
-                </div>
-              </div>
-              <div class="portfolio-details d-flex flex-column gap-3">
-                <h3 class="mb-0">{project.title}</h3>
-                <p class="mb-0 text-opacity-70 small">{project.excerpt}</p>
-                <div class="d-flex align-items-center gap-2">
-                  <span class="badge text-bg-primary">{project.category}</span>
-                  <span class="badge text-bg-secondary">{project.status}</span>
-                </div>
-                {project.technologies && project.technologies.length > 0 && (
-                  <div class="d-flex flex-wrap gap-1">
-                    {project.technologies.slice(0, 2).map(tech => (
-                      <span class="badge text-bg-dark text-white small">{tech}</span>
-                    ))}
-                  </div>
-                )}
-                <div class="hstack gap-2">
-                  {project.tags.slice(0, 3).map(tag => (
-                    <span class="badge text-dark border">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ProjectCard project={project} />
           </div>
         ))}
       </div>

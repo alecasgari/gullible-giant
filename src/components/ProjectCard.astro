@@ -1,0 +1,95 @@
+---
+export interface Props {
+  project: any;
+}
+const { project } = Astro.props as Props;
+---
+
+<div class="project-card d-flex flex-column gap-3 h-100" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+  <div class="project-card-img position-relative overflow-hidden">
+    <div class="ratio ratio-16x9">
+      <img src={project.featuredImage} alt={project.title} class="img-cover" loading="lazy" decoding="async" />
+    </div>
+    <div class="project-card-overlay">
+      <a href={`/projects/${project._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">
+        View Project
+      </a>
+    </div>
+    {project.featured && (
+      <div class="position-absolute top-0 end-0 m-3">
+        <span class="badge bg-warning text-dark">Featured</span>
+      </div>
+    )}
+  </div>
+  <div class="project-card-content d-flex flex-column gap-3">
+    <div class="project-labels d-flex align-items-center gap-2">
+      {project.category && <span class="badge text-bg-primary">{project.category}</span>}
+      {project.status && <span class="badge text-bg-secondary">{project.status}</span>}
+    </div>
+    <h3 class="mb-0 project-title">
+      <a href={`/projects/${project._sys.filename}`} class="text-decoration-none text-dark">
+        {project.title}
+      </a>
+    </h3>
+    {project.excerpt && <p class="mb-0 text-opacity-70 project-excerpt">{project.excerpt}</p>}
+
+    {(project.clientName || project.projectDate || project.duration) && (
+      <div class="d-flex flex-column gap-2 project-meta">
+        {project.clientName && (
+          <div class="d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:user-bold" class="fs-6 text-primary"></iconify-icon>
+            <span class="small text-opacity-70">{project.clientName}</span>
+            {project.clientCompany && <span class="small text-opacity-70">- {project.clientCompany}</span>}
+          </div>
+        )}
+        {project.projectDate && (
+          <div class="d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:calendar-bold" class="fs-6 text-primary"></iconify-icon>
+            <span class="small text-opacity-70">{new Date(project.projectDate).toLocaleDateString()}</span>
+          </div>
+        )}
+        {project.duration && (
+          <div class="d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:clock-circle-bold" class="fs-6 text-primary"></iconify-icon>
+            <span class="small text-opacity-70">{project.duration}</span>
+          </div>
+        )}
+      </div>
+    )}
+
+    {(project.tags && project.tags.length > 0) || (project.technologies && project.technologies.length > 0) ? (
+      <div class="project-footer d-flex flex-column gap-1">
+        {project.tags && project.tags.length > 0 && (
+          <div class="meta-row small text-opacity-70">
+            <iconify-icon icon="lucide:tags" class="me-2 text-primary fs-6"></iconify-icon>
+            <span>{project.tags.join(' | ')}</span>
+          </div>
+        )}
+        {project.technologies && project.technologies.length > 0 && (
+          <div class="meta-row small text-opacity-70">
+            <iconify-icon icon="lucide:cpu" class="me-2 text-primary fs-6"></iconify-icon>
+            <span>{project.technologies.join(' | ')}</span>
+          </div>
+        )}
+      </div>
+    ) : null}
+  </div>
+</div>
+
+<style>
+  .project-card-img { border-radius: 12px; overflow: hidden; }
+  .project-card-content { padding: 1rem; }
+  @media (min-width: 992px) { .project-card-content { padding: 1.25rem; } }
+  .img-cover { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+  .project-card { border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); border-radius: 12px; background: #fff; }
+  .project-card-content .project-title { font-size: 1.5rem; line-height: 1.3; }
+  .project-excerpt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .project-labels { font-size: 14px; }
+  .project-labels .badge { font-size: 14px; padding: .2rem .45rem; }
+  .meta-row { font-size: 14px; }
+  .project-meta { border-top: 1px solid rgba(0,0,0,0.06); padding-top: .75rem; }
+  .project-footer { border-top: 1px solid rgba(0,0,0,0.06); padding-top: .5rem; }
+
+  .project-card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+  .project-card:hover .project-card-overlay { opacity: 1; }
+</style>

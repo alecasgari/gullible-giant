@@ -3,9 +3,10 @@ export interface Props {
   title?: string;
   description?: string;
   class?: string;
+  hideHeader?: boolean;
 }
 
-const { title = "Alec Asgari - 18 Years of IT Industry Experience", description = "Alec Asgari with 18 years of experience in the IT industry, specializing in AI automation, CRM setup, and digital transformation solutions.", class: bodyClass } = Astro.props;
+const { title = "Alec Asgari - 18 Years of IT Industry Experience", description = "Alec Asgari with 18 years of experience in the IT industry, specializing in AI automation, CRM setup, and digital transformation solutions.", class: bodyClass, hideHeader = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -129,6 +130,7 @@ const { title = "Alec Asgari - 18 Years of IT Industry Experience", description 
   <!-- End Google Tag Manager (noscript) -->
 
   <!-- Header -->
+  {!hideHeader && (
   <header class="header border-4 border-primary border-top position-fixed start-0 top-0 w-100">
     <div class="container">
       <div class="header-wrapper d-flex align-items-center justify-content-between">
@@ -213,6 +215,7 @@ const { title = "Alec Asgari - 18 Years of IT Industry Experience", description 
       </div>
     </div>
   </header>
+  )}
 
   <!--  Page Wrapper -->
   <div class="page-wrapper overflow-hidden">
@@ -289,8 +292,8 @@ const { title = "Alec Asgari - 18 Years of IT Industry Experience", description 
     document.addEventListener('DOMContentLoaded', function() {
       const header = document.querySelector('.header');
       
-      // Only apply scroll behavior to non-home pages
-      if (!document.body.classList.contains('home-page')) {
+      // Only apply scroll behavior if header exists and not home page
+      if (header && !document.body.classList.contains('home-page')) {
         function handleScroll() {
           if (window.scrollY > 50) {
             header.classList.add('scrolled');

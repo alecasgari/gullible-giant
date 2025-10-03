@@ -2,6 +2,7 @@
 import client from "tina-client";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import MainLayout from "../../layouts/MainLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
 
 export async function getStaticPaths() {
   const { data } = await client.queries.postConnection();
@@ -16,6 +17,13 @@ const { slug } = Astro.params;
 const { data, query, variables } = await client.queries.post({
   relativePath: `${slug}.md`,
 });
+
+// Load recent projects for "My Projects" section
+const { data: projData } = await client.queries.projectConnection();
+const recentProjects = projData.projectConnection.edges
+  .map((e) => e.node)
+  .sort((a, b) => new Date(b.projectDate || "").getTime() - new Date(a.projectDate || "").getTime())
+  .slice(0, 3);
 ---
 
 <MainLayout title={data.post.title} description={data.post.excerpt}>
@@ -32,7 +40,7 @@ const { data, query, variables } = await client.queries.post({
             <h1 class="mb-0 fs-2">{data.post.title}</h1>
             <p class="fs-6 mb-0 text-opacity-70">{data.post.excerpt}</p>
             <div class="d-flex align-items-center gap-3">
-              <img src="/template/assets/images/testimonial/testimonial-1.jpg" alt="Author" class="img-fluid rounded-circle" width="50" height="50">
+              <img src="/template/assets/images/team/alec-asgari-author.webp" alt="Author" class="img-fluid rounded-circle" width="50" height="50">
               <div>
                 <h6 class="mb-0 fw-medium">{data.post.author}</h6>
                 <p class="mb-0 text-opacity-70 small">Author</p>
@@ -79,7 +87,7 @@ const { data, query, variables } = await client.queries.post({
           <!-- Author Bio -->
           <div class="mt-6 p-4 bg-dark text-white rounded-3" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
             <div class="d-flex align-items-center gap-4">
-              <img src="/template/assets/images/testimonial/testimonial-1.jpg" alt="Author" class="img-fluid rounded-circle" width="60" height="60">
+              <img src="/template/assets/images/team/alec-asgari-author.webp" alt="Author" class="img-fluid rounded-circle" width="60" height="60">
               <div>
                 <h5 class="mb-1 text-white">{data.post.author}</h5>
                 <p class="mb-0 text-white text-opacity-70">Author & Content Creator</p>
@@ -88,6 +96,27 @@ const { data, query, variables } = await client.queries.post({
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Projects Section -->
+  <section class="blog-my-projects py-5 py-lg-11 py-xl-12 bg-light-gray">
+    <div class="container">
+      <div class="row justify-content-between align-items-end">
+        <div class="col-12 col-md-8">
+          <h2 class="mb-3" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">My Projects</h2>
+        </div>
+        <div class="col-12 col-md-auto">
+          <a href="/projects" class="btn btn-primary" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1000">View all projects</a>
+        </div>
+      </div>
+      <div class="row g-4 mt-1">
+        {recentProjects.map(project => (
+          <div class="col-md-6 col-xl-4">
+            <ProjectCard project={project} />
+          </div>
+        ))}
       </div>
     </div>
   </section>

@@ -1,6 +1,7 @@
 ---
 import client from 'tina-client';
 import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
 
 // Fetch all blog posts
 const { data } = await client.queries.postConnection();
@@ -32,40 +33,10 @@ const sortedPosts = posts.sort((a, b) => {
   <!-- Blog Posts Grid -->
   <section class="blog-posts py-5 py-lg-11 py-xl-12">
     <div class="container">
-      <div class="row">
+      <div class="row g-4">
         {sortedPosts.map((post, index) => (
-          <div class="col-md-6 col-xl-4 mb-7 mb-xl-0">
-            <article class="blog-card d-flex flex-column gap-4 h-100" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
-              <div class="blog-card-img position-relative overflow-hidden">
-                <img src={post.featuredImage} alt={post.title} class="img-fluid w-100">
-                <div class="blog-card-overlay">
-                  <a href={`/blog/${post._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">
-                    Read More
-                  </a>
-                </div>
-              </div>
-              <div class="blog-card-content d-flex flex-column gap-3">
-                <div class="d-flex align-items-center gap-3">
-                  <span class="badge text-bg-primary">{post.category}</span>
-                  <span class="text-opacity-70">{new Date(post.publishDate).toLocaleDateString()}</span>
-                </div>
-                <h3 class="mb-0">
-                  <a href={`/blog/${post._sys.filename}`} class="text-decoration-none text-dark">
-                    {post.title}
-                  </a>
-                </h3>
-                <p class="mb-0 text-opacity-70">
-                  {post.excerpt || post.body?.children?.[0]?.children?.[0]?.text?.substring(0, 120) || 'Read more about this topic...'}...
-                </p>
-                <div class="d-flex align-items-center gap-3 mt-auto">
-                  <img src="/template/assets/images/testimonial/testimonial-1.jpg" alt="Author" class="img-fluid rounded-circle" width="40" height="40">
-                  <div>
-                    <h6 class="mb-0 fw-medium">{post.author}</h6>
-                    <p class="mb-0 text-opacity-70 small">Author</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+          <div class="col-md-6 col-xl-4">
+            <PostCard post={post} />
           </div>
         ))}
       </div>

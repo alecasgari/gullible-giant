@@ -8,16 +8,19 @@ const projects = data.projectConnection.edges.map(edge => edge.node);
 
 // Get unique categories
 const categories = [...new Set(projects.map(project => project.category))];
+// Get unique tags and technologies
+const allTags = [...new Set(projects.flatMap(project => project.tags || []))];
+const allTechnologies = [...new Set(projects.flatMap(project => project.technologies || []))];
 ---
 
-<MainLayout title="Our Projects - Portfolio" description="Explore our portfolio of successful projects. From web design to development, see how we've helped businesses achieve their digital goals.">
+<MainLayout title="My Projects - Portfolio" description="Explore our portfolio of successful projects. From web design to development, see how we've helped businesses achieve their digital goals.">
   <!-- Projects Hero Section -->
   <section class="projects-hero py-5 py-lg-11 py-xl-12 bg-light-gray">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xl-8 col-xxl-7 text-center">
           <div class="d-flex flex-column gap-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
-            <h1 class="mb-0 fs-10">Our Projects</h1>
+            <h1 class="mb-0 fs-10">My Projects</h1>
             <p class="fs-5 mb-0 text-opacity-70">
               Discover our portfolio of successful projects. Each project represents our commitment to excellence and innovation.
             </p>
@@ -28,91 +31,175 @@ const categories = [...new Set(projects.map(project => project.category))];
   </section>
 
   <!-- Projects Filter -->
-  <section class="projects-filter py-5">
+  <section class="projects-shell py-5 py-lg-11 py-xl-12">
     <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="filter-buttons-container" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
-            <button class="btn btn-outline-primary filter-btn active" data-filter="all">All Projects</button>
-            {categories.map(category => (
-              <button class="btn btn-outline-primary filter-btn" data-filter={category.toLowerCase().replace(/\s+/g, '-')}>
-                {category}
-              </button>
+      <div class="row g-4">
+        <aside class="filters-sidebar col-lg-3">
+          <div class="filters-panel filter-card" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+            <div class="filter-card-header d-flex align-items-center justify-content-between">
+              <h2 class="h5 mb-0">Filter & Search</h2>
+              <div class="d-flex align-items-center gap-2" id="filter-actions">
+                <button class="btn btn-sm btn-outline-secondary d-none" id="reset-filters">Reset</button>
+                <button class="btn btn-sm btn-primary d-none" id="copy-link" title="Copy share link"><iconify-icon icon="lucide:copy"></iconify-icon></button>
+              </div>
+            </div>
+            <div class="filter-card-body">
+              <div class="soft-card soft-card--nochrome mb-3">
+                <label for="search-input" class="form-label small text-opacity-70 mb-1">Search</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><iconify-icon icon="lucide:search" class="text-primary"></iconify-icon></span>
+                  <input type="text" class="form-control" id="search-input" placeholder="Search title and description..." />
+                </div>
+              </div>
+
+              <hr class="divider">
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <label class="form-label small text-opacity-70 mb-0">Category</label>
+                </div>
+                <div id="category-chips" class="chip-group">
+                  <button type="button" class="chip active" data-value="all">All</button>
+                  {categories.map(category => (
+                    <button type="button" class="chip" data-value={category}>{category}</button>
+                  ))}
+                </div>
+              </div>
+
+              <hr class="divider">
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <label class="form-label small text-opacity-70 mb-0">Tags</label>
+                </div>
+                <div id="tags-chips" class="chip-group">
+                  {allTags.map(tag => (
+                    <button type="button" class="chip" data-value={tag}>{tag}</button>
+                  ))}
+                </div>
+              </div>
+
+              <hr class="divider">
+
+              <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <label class="form-label small text-opacity-70 mb-0">Technologies</label>
+                </div>
+                <div id="tech-chips" class="chip-group">
+                  {allTechnologies.map(tech => (
+                    <button type="button" class="chip" data-value={tech}>{tech}</button>
+                  ))}
+                </div>
+              </div>
+
+              <hr class="divider">
+
+              <div class="soft-card">
+                <label class="form-label small text-opacity-70 mb-1">Sort by</label>
+                <select class="form-select" id="sort-select">
+                  <option value="date-desc">Newest first</option>
+                  <option value="date-asc">Oldest first</option>
+                  <option value="title-asc">Title A–Z</option>
+                  <option value="title-desc">Title Z–A</option>
+                </select>
+              </div>
+
+              <div class="d-grid gap-2 mt-3 d-lg-none">
+                <button class="btn btn-primary" id="apply-filters">Apply Filters</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <div class="col-lg-9">
+          <div id="results-loading" class="results-loading d-none">
+            <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+          </div>
+          <div class="row g-4" id="projects-grid">
+            {projects.map((project, index) => (
+              <div
+                class="col-md-6 project-item"
+                data-category={project.category || ''}
+                data-tags={(project.tags || []).map(t => t.toLowerCase()).join(',')}
+                data-tech={(project.technologies || []).map(t => t.toLowerCase()).join(',')}
+                data-title={(project.title || '').toLowerCase()}
+                data-excerpt={(project.excerpt || '').toLowerCase()}
+                data-date={project.projectDate}
+              >
+                <div class="project-card d-flex flex-column gap-3 h-100" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
+                  <div class="project-card-img position-relative overflow-hidden">
+                    <div class="ratio ratio-16x9">
+                      <img src={project.featuredImage} alt={project.title} class="img-cover" loading="lazy" decoding="async">
+                    </div>
+                    <div class="project-card-overlay">
+                      <a href={`/projects/${project._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">
+                        View Project
+                      </a>
+                    </div>
+                    {project.featured && (
+                      <div class="position-absolute top-0 end-0 m-3">
+                        <span class="badge bg-warning text-dark">Featured</span>
+                      </div>
+                    )}
+                  </div>
+                  <div class="project-card-content d-flex flex-column gap-3">
+                    <div class="project-labels d-flex align-items-center gap-2">
+                      <span class="badge text-bg-primary">{project.category}</span>
+                      <span class="badge text-bg-secondary">{project.status}</span>
+                    </div>
+                    <h3 class="mb-0 project-title">
+                      <a href={`/projects/${project._sys.filename}`} class="text-decoration-none text-dark">
+                        {project.title}
+                      </a>
+                    </h3>
+                    <p class="mb-0 text-opacity-70 project-excerpt">{project.excerpt}</p>
+                    <div class="d-flex flex-column gap-2 project-meta">
+                      <div class="d-flex align-items-center gap-2">
+                        <iconify-icon icon="solar:user-bold" class="fs-6 text-primary"></iconify-icon>
+                        <span class="small text-opacity-70">{project.clientName}</span>
+                        {project.clientCompany && (
+                          <span class="small text-opacity-70">- {project.clientCompany}</span>
+                        )}
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <iconify-icon icon="solar:calendar-bold" class="fs-6 text-primary"></iconify-icon>
+                        <span class="small text-opacity-70">{new Date(project.projectDate).toLocaleDateString()}</span>
+                      </div>
+                      {project.duration && (
+                        <div class="d-flex align-items-center gap-2">
+                          <iconify-icon icon="solar:clock-circle-bold" class="fs-6 text-primary"></iconify-icon>
+                          <span class="small text-opacity-70">{project.duration}</span>
+                        </div>
+                      )}
+                    </div>
+                    {(project.tags && project.tags.length > 0) || (project.technologies && project.technologies.length > 0) ? (
+                      <div class="project-footer d-flex flex-column gap-1">
+                        {project.tags && project.tags.length > 0 && (
+                          <div class="meta-row small text-opacity-70">
+                            <iconify-icon icon="lucide:tags" class="me-2 text-primary fs-6"></iconify-icon>
+                            <span>{project.tags.join(' | ')}</span>
+                          </div>
+                        )}
+                        {project.technologies && project.technologies.length > 0 && (
+                          <div class="meta-row small text-opacity-70">
+                            <iconify-icon icon="lucide:cpu" class="me-2 text-primary fs-6"></iconify-icon>
+                            <span>{project.technologies.join(' | ')}</span>
+                          </div>
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Projects Grid -->
-  <section class="projects-grid py-5 py-lg-11 py-xl-12">
-    <div class="container">
-      <div class="row">
-        {projects.map((project, index) => (
-          <div class="col-md-6 col-xl-4 mb-7 mb-xl-0 project-item" data-category={project.category.toLowerCase().replace(/\s+/g, '-')}>
-            <div class="project-card d-flex flex-column gap-4" data-aos="fade-up" data-aos-delay={`${(index + 1) * 100}`} data-aos-duration="1000">
-              <div class="project-card-img position-relative overflow-hidden">
-                <img src={project.featuredImage} alt={project.title} class="img-fluid w-100">
-                <div class="project-card-overlay">
-                  <a href={`/projects/${project._sys.filename}`} class="btn bg-primary text-dark px-4 py-2">
-                    View Project
-                  </a>
-                </div>
-                {project.featured && (
-                  <div class="position-absolute top-0 end-0 m-3">
-                    <span class="badge bg-warning text-dark">Featured</span>
-                  </div>
-                )}
-              </div>
-              <div class="project-card-content d-flex flex-column gap-3">
-                <div class="d-flex align-items-center gap-3">
-                  <span class="badge text-bg-primary">{project.category}</span>
-                  <span class="badge text-bg-secondary">{project.status}</span>
-                </div>
-                <h3 class="mb-0">
-                  <a href={`/projects/${project._sys.filename}`} class="text-decoration-none text-dark">
-                    {project.title}
-                  </a>
-                </h3>
-                <p class="mb-0 text-opacity-70">{project.excerpt}</p>
-                <div class="d-flex flex-column gap-2">
-                  <div class="d-flex align-items-center gap-2">
-                    <iconify-icon icon="solar:user-bold" class="fs-6 text-primary"></iconify-icon>
-                    <span class="small text-opacity-70">{project.clientName}</span>
-                    {project.clientCompany && (
-                      <span class="small text-opacity-70">- {project.clientCompany}</span>
-                    )}
-                  </div>
-                  <div class="d-flex align-items-center gap-2">
-                    <iconify-icon icon="solar:calendar-bold" class="fs-6 text-primary"></iconify-icon>
-                    <span class="small text-opacity-70">{new Date(project.projectDate).toLocaleDateString()}</span>
-                  </div>
-                  {project.duration && (
-                    <div class="d-flex align-items-center gap-2">
-                      <iconify-icon icon="solar:clock-circle-bold" class="fs-6 text-primary"></iconify-icon>
-                      <span class="small text-opacity-70">{project.duration}</span>
-                    </div>
-                  )}
-                </div>
-                <div class="d-flex flex-wrap gap-2">
-                  {project.tags.map(tag => (
-                    <span class="badge text-dark border">{tag}</span>
-                  ))}
-                </div>
-                {project.technologies && project.technologies.length > 0 && (
-                  <div class="d-flex flex-wrap gap-1">
-                    {project.technologies.map(tech => (
-                      <span class="badge text-bg-dark text-white small">{tech}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <button class="mobile-filter-btn d-lg-none" id="mobile-filter-btn">
+      <iconify-icon icon="lucide:filter"></iconify-icon>
+      <span>Filters</span>
+    </button>
+    <div class="backdrop" id="filters-backdrop"></div>
   </section>
 
   <!-- CTA Section -->
@@ -137,108 +224,349 @@ const categories = [...new Set(projects.map(project => project.category))];
 </MainLayout>
 
 <style>
-  .filter-buttons-container {
-    display: flex;
-    gap: 0.75rem;
-    overflow-x: auto;
-    padding: 1rem 0;
-    scrollbar-width: thin;
-    scrollbar-color: var(--bs-primary) transparent;
-  }
-  
-  .filter-buttons-container::-webkit-scrollbar {
-    height: 4px;
-  }
-  
-  .filter-buttons-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .filter-buttons-container::-webkit-scrollbar-thumb {
-    background-color: var(--bs-primary);
-    border-radius: 2px;
-  }
-  
-  .filter-btn {
-    flex-shrink: 0;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    background-color: transparent;
-    border: 1px solid var(--bs-primary);
-    color: #333;
-    white-space: nowrap;
-  }
-  
-  .filter-btn:hover {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: white;
-  }
-  
-  .filter-btn.active {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: white;
-  }
-  
-  .project-card-img {
+  .filters-sidebar { order: 1; }
+  @media (min-width: 992px) { .filters-sidebar { order: 0; } }
+
+  .filter-card {
+    border: 1px solid rgba(0,0,0,.08);
     border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
     overflow: hidden;
+    position: relative;
+    z-index: 2;
   }
-  
-  .project-card-overlay {
-    position: absolute;
+  .filter-card-header {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    background: #fafafa;
+  }
+  .filter-card-body { padding: 1rem; }
+  @media (min-width: 992px) { .filter-card-body { padding: 1.25rem; } }
+
+  .soft-card {
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.03);
+    padding: .75rem;
+  }
+  .soft-card--nochrome { border: 0; box-shadow: none; padding: 0; }
+  .soft-card--nochrome .input-group .input-group-text { border-right: 0; }
+  .soft-card--nochrome .input-group .form-control { border-left: 0; }
+  .soft-card--nochrome .input-group .input-group-text, .soft-card--nochrome .input-group .form-control { border-color: rgba(0,0,0,.12); }
+  .divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,0,0,.06), rgba(0,0,0,.02));
+    margin: .75rem 0 1rem;
+  }
+
+  .chip-group { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .chip {
+    border: 1px solid rgba(0,0,0,.08);
+    background: #f7f7f8;
+    color: #333;
+    border-radius: 999px;
+    padding: .25rem .6rem;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: all .2s ease;
+  }
+  .chip:hover { background: #f0f0f2; }
+  .chip.active {
+    background: var(--bs-primary);
+    color: #111;
+    border-color: var(--bs-primary);
+  }
+  .mobile-filter-btn { color: #111; }
+  .mobile-filter-btn iconify-icon, .mobile-filter-btn span { color: inherit; }
+
+  .project-card-img { border-radius: 12px; overflow: hidden; }
+  .project-card-content { padding: 1rem; }
+  @media (min-width: 992px) { .project-card-content { padding: 1.25rem; } }
+  .img-cover { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+  .project-card { border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); border-radius: 12px; background: #fff; }
+  .project-card-content .project-title { font-size: 1.5rem; line-height: 1.3; }
+  .project-excerpt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .project-labels { font-size: 14px; }
+  .project-labels .badge { font-size: 14px; padding: .2rem .45rem; }
+  .meta-row { font-size: 14px; }
+  .project-meta { border-top: 1px solid rgba(0,0,0,0.06); padding-top: .75rem; }
+  .project-footer { border-top: 1px solid rgba(0,0,0,0.06); padding-top: .5rem; }
+
+  .project-card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+  .project-card:hover .project-card-overlay { opacity: 1; }
+
+  .project-item { transition: all 0.3s ease; }
+  .project-item.hidden { display: none; }
+
+  /* Mobile floating filter button */
+  .mobile-filter-btn {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 16px;
+    z-index: 1047;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    border-radius: 999px;
+    padding: .6rem 1rem;
+    background: var(--bs-primary);
+    color: #111;
+    box-shadow: 0 6px 20px rgba(0,0,0,.2);
+    border: none;
+  }
+
+  /* Bottom sheet */
+  .filters-panel {
+    position: static;
+  }
+  @media (max-width: 991.98px) {
+    .filters-panel {
+      position: fixed;
+      left: 0; right: 0;
+      bottom: 0;
+      z-index: 1050;
+      transform: translateY(100%);
+      transition: transform .3s ease;
+      max-height: 80vh;
+      overflow: auto;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    .filters-panel.open { transform: translateY(0); pointer-events: auto; visibility: visible; }
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+      z-index: 1048;
+    }
+    .backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    body.sheet-open { overflow: hidden; }
+  }
+  .results-loading {
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    padding: .5rem 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0));
   }
-  
-  .project-card:hover .project-card-overlay {
-    opacity: 1;
-  }
-  
-  .project-item {
-    transition: all 0.3s ease;
-  }
-  
-  .project-item.hidden {
-    display: none;
-  }
+  /* Ensure backdrop hidden by default */
+  .backdrop { display: none; opacity: 0; pointer-events: none; }
+  .backdrop.show { display: block; opacity: 1; pointer-events: auto; }
 </style>
 
 <script>
-  // Project filtering functionality
   document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const projectItems = document.querySelectorAll('.project-item');
-    
-    filterButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        this.classList.add('active');
-        
-        const filterValue = this.getAttribute('data-filter');
-        
-        projectItems.forEach(item => {
-          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
+    const projectItems = Array.from(document.querySelectorAll('.project-item'));
+
+    // Controls
+    const searchInput = document.getElementById('search-input');
+    const sortSelect = document.getElementById('sort-select');
+    const resetBtn = document.getElementById('reset-filters');
+    const copyLinkBtn = document.getElementById('copy-link');
+    const categoryChips = Array.from(document.querySelectorAll('#category-chips .chip'));
+    const tagsChips = Array.from(document.querySelectorAll('#tags-chips .chip'));
+    const techChips = Array.from(document.querySelectorAll('#tech-chips .chip'));
+    const mobileBtn = document.getElementById('mobile-filter-btn');
+    const panel = document.querySelector('.filters-panel');
+    const backdrop = document.getElementById('filters-backdrop');
+    const applyFiltersBtn = document.getElementById('apply-filters');
+
+    // Force closed initial state
+    panel?.classList.remove('open');
+    backdrop?.classList.remove('show');
+    document.body.classList.remove('sheet-open');
+
+    const params = new URLSearchParams(window.location.search);
+
+    function initFromURL() {
+      const q = params.get('q') || '';
+      const cat = params.get('category') || 'all';
+      const tags = (params.get('tags') || '').split(',').filter(Boolean).map(v => v.toLowerCase());
+      const tech = (params.get('tech') || '').split(',').filter(Boolean).map(v => v.toLowerCase());
+      const sort = params.get('sort') || 'date-desc';
+
+      if (searchInput) searchInput.value = q;
+      if (sortSelect) sortSelect.value = sort;
+
+      // set category active
+      categoryChips.forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.value?.toLowerCase() === cat.toLowerCase());
       });
-    });
+      // set tags/tech actives
+      tagsChips.forEach(chip => chip.classList.toggle('active', tags.includes((chip.dataset.value || '').toLowerCase())));
+      techChips.forEach(chip => chip.classList.toggle('active', tech.includes((chip.dataset.value || '').toLowerCase())));
+
+      updateActionsVisibility();
+    }
+
+    function getState() {
+      const q = (searchInput?.value || '').trim();
+      const categoryActive = categoryChips.find(c => c.classList.contains('active'));
+      const category = (categoryActive?.dataset.value || 'all');
+      const tags = tagsChips.filter(c => c.classList.contains('active')).map(c => c.dataset.value || '');
+      const tech = techChips.filter(c => c.classList.contains('active')).map(c => c.dataset.value || '');
+      const sort = sortSelect?.value || 'date-desc';
+      return { q, category, tags, tech, sort };
+    }
+
+    function updateURLState() {
+      const { q, category, tags, tech, sort } = getState();
+      const next = new URLSearchParams();
+      if (q) next.set('q', q);
+      if (category && category !== 'all') next.set('category', category);
+      if (tags.length) next.set('tags', tags.join(','));
+      if (tech.length) next.set('tech', tech.join(','));
+      if (sort && sort !== 'date-desc') next.set('sort', sort);
+      const qs = next.toString();
+      const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+      window.history.replaceState(null, '', url);
+    }
+
+    function updateActionsVisibility() {
+      const { q, category, tags, tech, sort } = getState();
+      const anyActive = Boolean(q) || category !== 'all' || tags.length || tech.length || sort !== 'date-desc';
+      resetBtn?.classList.toggle('d-none', !anyActive);
+      copyLinkBtn?.classList.toggle('d-none', !anyActive);
+    }
+
+    function matchesFilters(item) {
+      const { q, category, tags, tech } = getState();
+      const qLower = q.toLowerCase();
+
+      const title = item.getAttribute('data-title') || '';
+      const excerpt = item.getAttribute('data-excerpt') || '';
+      const itemCat = (item.getAttribute('data-category') || '').toLowerCase();
+      const itemTags = (item.getAttribute('data-tags') || '').split(',').filter(Boolean);
+      const itemTech = (item.getAttribute('data-tech') || '').split(',').filter(Boolean);
+
+      const textMatch = !qLower || title.includes(qLower) || excerpt.includes(qLower);
+      const categoryMatch = category === 'all' || category.toLowerCase() === itemCat;
+      const tagsMatch = !tags.length || tags.every(t => itemTags.includes(t.toLowerCase()));
+      const techMatch = !tech.length || tech.every(t => itemTech.includes(t.toLowerCase()));
+      return textMatch && categoryMatch && tagsMatch && techMatch;
+    }
+
+    function applyFilters() {
+      projectItems.forEach(item => {
+        item.classList.toggle('hidden', !matchesFilters(item));
+      });
+    }
+
+    function applySort() {
+      const { sort } = getState();
+      const row = document.getElementById('projects-grid');
+      if (!row) return;
+      const visible = projectItems.filter(i => !i.classList.contains('hidden'));
+      const hidden = projectItems.filter(i => i.classList.contains('hidden'));
+
+      const toDate = (s) => s ? new Date(s).getTime() : 0;
+      const getTitle = (el) => (el.getAttribute('data-title') || '').toLowerCase();
+      const getDate = (el) => toDate(el.getAttribute('data-date'));
+
+      visible.sort((a, b) => {
+        switch (sort) {
+          case 'date-asc': return getDate(a) - getDate(b);
+          case 'title-asc': return getTitle(a).localeCompare(getTitle(b));
+          case 'title-desc': return getTitle(b).localeCompare(getTitle(a));
+          case 'date-desc':
+          default:
+            return getDate(b) - getDate(a);
+        }
+      });
+
+      [...visible, ...hidden].forEach(el => row.appendChild(el));
+    }
+
+    const loadingEl = document.getElementById('results-loading');
+    let refreshTimer = null;
+    function setLoading(v) { loadingEl?.classList.toggle('d-none', !v); }
+
+    function applyFiltersAndSort() {
+      applyFilters();
+      applySort();
+      setLoading(false);
+    }
+
+    function refresh() {
+      setLoading(true);
+      updateURLState();
+      updateActionsVisibility();
+      if (refreshTimer) clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(applyFiltersAndSort, 150);
+    }
+
+    function resetAll() {
+      if (searchInput) searchInput.value = '';
+      categoryChips.forEach((c, idx) => c.classList.toggle('active', idx === 0)); // set "All"
+      tagsChips.forEach(c => c.classList.remove('active'));
+      techChips.forEach(c => c.classList.remove('active'));
+      if (sortSelect) sortSelect.value = 'date-desc';
+      refresh();
+    }
+
+    function copyShareLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        copyLinkBtn?.classList.add('btn-success');
+        setTimeout(() => copyLinkBtn?.classList.remove('btn-success'), 1200);
+      });
+    }
+
+    function isMobile() { return window.matchMedia('(max-width: 991.98px)').matches; }
+
+    function openSheet() {
+      if (!isMobile()) return;
+      panel?.classList.add('open');
+      backdrop?.classList.add('show');
+      document.body.classList.add('sheet-open');
+    }
+    function closeSheet() {
+      panel?.classList.remove('open');
+      backdrop?.classList.remove('show');
+      document.body.classList.remove('sheet-open');
+    }
+
+    // Ensure closed state on load and when resizing
+    closeSheet();
+    window.addEventListener('resize', () => { if (!isMobile()) closeSheet(); });
+
+    // Init
+    initFromURL();
+    applyFilters();
+    applySort();
+
+    // Events
+    searchInput?.addEventListener('input', () => refresh());
+    sortSelect?.addEventListener('change', () => refresh());
+    resetBtn?.addEventListener('click', resetAll);
+    copyLinkBtn?.addEventListener('click', copyShareLink);
+
+    categoryChips.forEach(chip => chip.addEventListener('click', () => {
+      categoryChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      refresh();
+    }));
+    function toggleChipActive(e) { e.currentTarget.classList.toggle('active'); refresh(); }
+    tagsChips.forEach(chip => chip.addEventListener('click', toggleChipActive));
+    techChips.forEach(chip => chip.addEventListener('click', toggleChipActive));
+
+    mobileBtn?.addEventListener('click', openSheet);
+    backdrop?.addEventListener('click', closeSheet);
+    applyFiltersBtn?.addEventListener('click', () => { closeSheet(); refresh(); });
   });
 </script>
