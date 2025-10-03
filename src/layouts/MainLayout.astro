@@ -7,6 +7,12 @@ export interface Props {
 }
 
 const { title = "Alec Asgari - 18 Years of IT Industry Experience", description = "Alec Asgari with 18 years of experience in the IT industry, specializing in AI automation, CRM setup, and digital transformation solutions.", class: bodyClass, hideHeader = false } = Astro.props;
+
+// Build canonical from site + current path
+const base = Astro.site ?? new URL('https://alecasgari.com');
+const path = Astro.url?.pathname ?? '/';
+const search = Astro.url?.search ?? '';
+const canonicalUrl = new URL(path + search, base).toString();
 ---
 
 <!doctype html>
@@ -18,9 +24,7 @@ const { title = "Alec Asgari - 18 Years of IT Industry Experience", description 
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="google-site-verification" content="your-verification-code-here" />
-  {Astro.url && (
-    <link rel="canonical" href={`https://alecasgari.com${Astro.url.pathname}${Astro.url.search || ''}`} />
-  )}
+  <link rel="canonical" href={canonicalUrl} />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
