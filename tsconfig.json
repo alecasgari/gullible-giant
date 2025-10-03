@@ -10,8 +10,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "tina-client": [".tina/__generated__/client", "tina/__generated__/client"]
-    }
+      "~/*": [
+        "src/*"
+      ],
+      "tina-client": [
+        ".tina/__generated__/client",
+        "tina/__generated__/client"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }
