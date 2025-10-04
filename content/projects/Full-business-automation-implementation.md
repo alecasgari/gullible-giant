@@ -1,6 +1,13 @@
 ---
-title: Future Innovation Summit - DFISX
-excerpt: Region's Largest Innovation Focused Conference & Exhibition
+title: >-
+  End-to-End IT Infrastructure and AI-Powered Automation for Future Innovation
+  Summit (DFISX)
+excerpt: >-
+  Developed and managed the complete digital infrastructure for a major tech
+  summit in Dubai, from initial website development and AI-driven content
+  generation to a comprehensive event management system with integrated
+  e-commerce and personalized email marketing. The project successfully
+  supported over 150 speakers and numerous attendees for a high-profile event.
 featuredImage: /Projects/Screenshot%202025-09-28%20143002.png
 gallery:
   - image: /Projects/Screenshot%202025-09-28%20143018.png
@@ -9,11 +16,12 @@ gallery:
   - image: /Projects/image-2023-06-23T122217.544.webp
 videoUrl: 'https://youtu.be/9uWCDHX_5oc'
 projectLink: 'https://dfisx.com/'
-category: AI Automation
+category: System Integration
 tags:
-  - Dubai
-  - Event
-  - Summit
+  - Event Technology
+  - AI Automation
+  - IT Infrastructure
+  - System Integration
 projectDate: 2024-12-01T00:00:00.000Z
 clientName: Adnan Al Noorani
 clientCompany: Future Innovation Summit
