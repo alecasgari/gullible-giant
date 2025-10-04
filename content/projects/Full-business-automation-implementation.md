@@ -8,7 +8,7 @@ excerpt: >-
   generation to a comprehensive event management system with integrated
   e-commerce and personalized email marketing. The project successfully
   supported over 150 speakers and numerous attendees for a high-profile event.
-featuredImage: /Projects/Screenshot%202025-09-28%20143002.png
+featuredImage: /hero-slider/hero-4.jpg
 gallery:
   - image: /Projects/Screenshot%202025-09-28%20143018.png
   - image: /Projects/dfisx.png
