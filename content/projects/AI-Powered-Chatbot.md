@@ -8,7 +8,7 @@ excerpt: >-
   conversational AI and schedules meetings directly into the calendar for
   qualified prospects, seamlessly handing off to a human agent when requested.
 featuredImage: /Projects/ai-chatbot-by-alecasgari.webp
-videoUrl: 'https://youtu.be/bF5BZgnIZPE?si=tL-jmozfGc558khk'
+videoUrl: 'https://www.youtube.com/watch?v=bF5BZgnIZPE'
 projectLink: 'https://alecasgari.com/'
 category: AI Automation
 tags:
