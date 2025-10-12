@@ -13,7 +13,7 @@ gallery:
     alt: N8n modules
   - image: /Projects/IMG_20251012_132832_981.jpg
     alt: 'N8n ai agent prompt '
-videoUrl: 'https://youtu.be/Aix7_y0u8OI?feature=shared'
+videoUrl: 'https://m.youtube.com/watch?v=Aix7_y0u8OI'
 projectLink: 'https://givsharifi.com'
 category: AI Automation
 tags:
