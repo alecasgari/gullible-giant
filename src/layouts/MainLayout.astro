@@ -127,6 +127,125 @@ const canonicalUrl = new URL(path + search, base).toString();
     body:not(.home-page) .header.scrolled .logo-dark {
       display: block;
     }
+
+    /* Global: reduce heading sizes (H1–H5) by ~30% across breakpoints */
+    h1, .h1 {
+      font-size: calc(1.3475rem + 5.67vw);
+    }
+    @media (min-width: 1200px) {
+      h1, .h1 {
+        font-size: 5.6rem;
+      }
+    }
+
+    h2, .h2 {
+      font-size: calc(0.9975rem + 1.47vw);
+    }
+    @media (min-width: 1200px) {
+      h2, .h2 {
+        font-size: 2.1rem;
+      }
+    }
+
+    h3, .h3 {
+      font-size: calc(0.945rem + 0.84vw);
+    }
+    @media (min-width: 1200px) {
+      h3, .h3 {
+        font-size: 1.575rem;
+      }
+    }
+
+    h4, .h4 {
+      font-size: calc(0.91rem + 0.42vw);
+    }
+    @media (min-width: 1200px) {
+      h4, .h4 {
+        font-size: 1.225rem;
+      }
+    }
+
+    h5, .h5 {
+      font-size: 0.7875rem;
+    }
+
+    /* Reduce heading-sized utility classes when used on H1–H5 by ~30% */
+    :is(h1,h2,h3,h4,h5).fs-2 { font-size: 0.525rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-3 { font-size: 0.6125rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-4 { font-size: 0.7rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-5 { font-size: 0.7875rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-6 { font-size: 0.875rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-7 { font-size: calc(0.8925rem + 0.21vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-8 { font-size: calc(0.91rem + 0.42vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-9 { font-size: calc(0.9275rem + 0.63vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-10 { font-size: calc(0.945rem + 0.84vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-11 { font-size: calc(0.9625rem + 1.05vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-12 { font-size: calc(0.9975rem + 1.47vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-13 { font-size: calc(1.0325rem + 1.89vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-14 { font-size: calc(1.05rem + 2.1vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-15 { font-size: calc(1.1025rem + 2.73vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-16 { font-size: calc(1.3475rem + 5.67vw) !important; }
+
+    @media (min-width: 1200px) {
+      :is(h1,h2,h3,h4,h5).fs-7 { font-size: 1.05rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-8 { font-size: 1.225rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-9 { font-size: 1.4rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-10 { font-size: 1.575rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-11 { font-size: 1.75rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-12 { font-size: 2.1rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-13 { font-size: 2.45rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-14 { font-size: 2.625rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-15 { font-size: 3.15rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-16 { font-size: 5.6rem !important; }
+    }
+  </style>
+
+  <!-- Global heading overrides (apply site-wide) -->
+  <style is:global>
+    /* Global: reduce heading sizes (H1–H5) by ~30% across breakpoints */
+    h1, .h1 { font-size: calc(1.3475rem + 5.67vw); }
+    @media (min-width: 1200px) { h1, .h1 { font-size: 5.6rem; } }
+
+    h2, .h2 { font-size: calc(0.9975rem + 1.47vw); }
+    @media (min-width: 1200px) { h2, .h2 { font-size: 2.1rem; } }
+
+    h3, .h3 { font-size: calc(0.945rem + 0.84vw); }
+    @media (min-width: 1200px) { h3, .h3 { font-size: 1.575rem; } }
+
+    h4, .h4 { font-size: calc(0.91rem + 0.42vw); }
+    @media (min-width: 1200px) { h4, .h4 { font-size: 1.225rem; } }
+
+    h5, .h5 { font-size: 0.7875rem; }
+
+    /* Reduce heading-sized utility classes when used on H1–H5 by ~30% */
+    :is(h1,h2,h3,h4,h5).fs-2 { font-size: 0.525rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-3 { font-size: 0.6125rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-4 { font-size: 0.7rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-5 { font-size: 0.7875rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-6 { font-size: 0.875rem !important; }
+    :is(h1,h2,h3,h4,h5).fs-7 { font-size: calc(0.8925rem + 0.21vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-8 { font-size: calc(0.91rem + 0.42vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-9 { font-size: calc(0.9275rem + 0.63vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-10 { font-size: calc(0.945rem + 0.84vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-11 { font-size: calc(0.9625rem + 1.05vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-12 { font-size: calc(0.9975rem + 1.47vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-13 { font-size: calc(1.0325rem + 1.89vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-14 { font-size: calc(1.05rem + 2.1vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-15 { font-size: calc(1.1025rem + 2.73vw) !important; }
+    :is(h1,h2,h3,h4,h5).fs-16 { font-size: calc(1.3475rem + 5.67vw) !important; }
+
+    @media (min-width: 1200px) {
+      :is(h1,h2,h3,h4,h5).fs-7 { font-size: 1.05rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-8 { font-size: 1.225rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-9 { font-size: 1.4rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-10 { font-size: 1.575rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-11 { font-size: 1.75rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-12 { font-size: 2.1rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-13 { font-size: 2.45rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-14 { font-size: 2.625rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-15 { font-size: 3.15rem !important; }
+      :is(h1,h2,h3,h4,h5).fs-16 { font-size: 5.6rem !important; }
+    }
   </style>
 </head>
 
