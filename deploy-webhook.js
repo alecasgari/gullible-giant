@@ -1,6 +1,10 @@
 import express from 'express';
 import { exec } from 'child_process';
 import crypto from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 app.use(express.json({
@@ -9,16 +13,20 @@ app.use(express.json({
   }
 }));
 
-// Config via env
+const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 const REPO_DIR = process.env.REPO_DIR || '/home/alecadmin/alec-website';
-const TINA_CLIENT_ID = process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '';
-const TINA_TOKEN = process.env.TINA_TOKEN || '';
+const DEPLOY_SCRIPT = process.env.DEPLOY_SCRIPT || path.join(__dirname, 'scripts', 'deploy-server.sh');
 
-function run(cmd) {
+let deployInProgress = false;
+
+function run(cmd, extraEnv = {}) {
   return new Promise((resolve, reject) => {
-    exec(cmd, { maxBuffer: 1024 * 1024 * 64, env: process.env }, (error, stdout, stderr) => {
+    exec(cmd, {
+      maxBuffer: 1024 * 1024 * 64,
+      env: { ...process.env, REPO_DIR, ...extraEnv },
+    }, (error, stdout, stderr) => {
       if (error) {
         return reject({ error, stdout, stderr });
       }
@@ -27,53 +35,75 @@ function run(cmd) {
   });
 }
 
+function isAuthorized(req) {
+  const ghSig = req.headers['x-hub-signature-256'];
+  if (ghSig && typeof ghSig === 'string' && WEBHOOK_SECRET) {
+    const expected =
+      'sha256=' +
+      crypto.createHmac('sha256', WEBHOOK_SECRET).update(req.rawBody || Buffer.from('')).digest('hex');
+    try {
+      return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(ghSig));
+    } catch {
+      return false;
+    }
+  }
+
+  const provided = req.headers['x-webhook-secret'];
+  return Boolean(WEBHOOK_SECRET && provided === WEBHOOK_SECRET);
+}
+
 app.post('/deploy', async (req, res) => {
+  if (!isAuthorized(req)) {
+    return res.status(401).json({ success: false, error: 'unauthorized' });
+  }
+
+  if (deployInProgress) {
+    return res.status(409).json({ success: false, error: 'deploy already in progress' });
+  }
+
+  deployInProgress = true;
+  const startedAt = new Date().toISOString();
+  console.log('Deploy webhook triggered', startedAt);
+
   try {
-    // Verify HMAC signature from GitHub if present
-    const ghSig = req.headers['x-hub-signature-256'];
-    let authorized = false;
-    if (ghSig && typeof ghSig === 'string') {
-      const expected =
-        'sha256=' +
-        crypto.createHmac('sha256', WEBHOOK_SECRET).update(req.rawBody || Buffer.from('')).digest('hex');
-      try { authorized = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(ghSig)); } catch { authorized = false; }
-    }
-    // Fallback to simple header secret for manual curl
-    if (!authorized) {
-      const provided = req.headers['x-webhook-secret'];
-      if (!WEBHOOK_SECRET || provided !== WEBHOOK_SECRET) {
-        return res.status(401).json({ success: false, error: 'unauthorized' });
-      }
-    }
-
-    console.log('🚀 Deploy webhook triggered', new Date().toISOString());
-
-    // Build inside host using local Node (fewer Docker deps)
-    const cmd = [
-      `cd ${REPO_DIR}`,
-      `git config --global --add safe.directory ${REPO_DIR}`,
-      'git pull origin main',
-      `NEXT_PUBLIC_TINA_CLIENT_ID=${TINA_CLIENT_ID} TINA_TOKEN=${TINA_TOKEN} npx -y tinacms build`,
-      'npm run build'
-    ].join(' && ');
-
+    const cmd = `bash ${DEPLOY_SCRIPT}`;
     const { stdout, stderr } = await run(cmd);
-    console.log('✅ Deploy successful');
+
     if (stdout) console.log(stdout);
     if (stderr) console.error(stderr);
-    return res.json({ success: true, message: 'Deploy successful', at: new Date().toISOString() });
+
+    return res.json({
+      success: true,
+      message: 'Deploy successful',
+      startedAt,
+      finishedAt: new Date().toISOString(),
+    });
   } catch (e) {
-    console.error('❌ Deploy failed:', e);
-    return res.status(500).json({ success: false, error: e?.error?.message || e?.message || 'unknown', stderr: e?.stderr });
+    console.error('Deploy failed:', e);
+    return res.status(500).json({
+      success: false,
+      error: e?.error?.message || e?.message || 'unknown',
+      stdout: e?.stdout,
+      stderr: e?.stderr,
+    });
+  } finally {
+    deployInProgress = false;
   }
 });
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'OK', at: new Date().toISOString(), service: 'Deploy Webhook' });
+  res.json({
+    status: 'OK',
+    at: new Date().toISOString(),
+    service: 'Deploy Webhook',
+    repoDir: REPO_DIR,
+    deployInProgress,
+  });
 });
 
-app.listen(PORT, () => {
-  console.log(`🎯 Deploy webhook running on port ${PORT}`);
-  console.log(`🔗 POST /deploy`);
-  console.log(`❤️  GET  /health`);
+app.listen(PORT, HOST, () => {
+  console.log(`Deploy webhook listening on http://${HOST}:${PORT}`);
+  console.log('POST /deploy  (header: x-webhook-secret)');
+  console.log('GET  /health');
+  console.log(`REPO_DIR: ${REPO_DIR}`);
 });

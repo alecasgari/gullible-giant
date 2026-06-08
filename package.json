@@ -7,13 +7,16 @@
     "postinstall": "node ./node_modules/@tinacms/cli/dist/index.js build",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "webhook": "node deploy-webhook.js",
+    "deploy:server": "bash scripts/deploy-server.sh"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "astro": "^5.14.0",
+    "express": "^4.22.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tinacms": "^2.8.3"
