@@ -2,21 +2,22 @@ name: Deploy to Server
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy via webhook on server
-      uses: appleboy/ssh-action@v0.1.5
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          curl -sf -X POST http://127.0.0.1:3000/deploy \
-            -H "x-webhook-secret: ${{ secrets.WEBHOOK_SECRET }}" \
-            -H "Content-Type: application/json" \
-            -d '{}' || echo "Webhook deploy failed — run deploy manually on server"
+      - name: Deploy via webhook on server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            curl -sf -X POST http://127.0.0.1:3000/deploy \
+              -H "x-webhook-secret: ${{ secrets.WEBHOOK_SECRET }}" \
+              -H "Content-Type: application/json" \
+              -d '{}' || echo "Webhook deploy failed — run deploy manually on server"
