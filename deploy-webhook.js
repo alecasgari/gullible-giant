@@ -22,7 +22,8 @@ function loadEnvFile(filePath) {
     ) {
       value = value.slice(1, -1);
     }
-    if (process.env[key] === undefined) process.env[key] = value;
+    // .env-webhook always wins over stale PM2/shell env (e.g. old PORT=3000)
+    process.env[key] = value;
   }
 }
 
