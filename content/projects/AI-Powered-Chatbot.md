@@ -1,12 +1,6 @@
 ---
-title: >-
-  AI-Powered 24/7 Sales Assistant Chatbot with Automated Lead Qualification and
-  Meeting Scheduling
-excerpt: >-
-  Developed and deployed a custom AI chatbot that functions as a complete 24/7
-  sales assistant. The solution automates the lead qualification process through
-  conversational AI and schedules meetings directly into the calendar for
-  qualified prospects, seamlessly handing off to a human agent when requested.
+title: AI-Powered 24/7 Sales Assistant Chatbot with Automated Lead Qualification and Meeting Scheduling
+excerpt: 'Developed and deployed a custom AI chatbot that functions as a complete 24/7 sales assistant. The solution automates the lead qualification process through conversational AI and schedules meetings directly into the calendar for qualified prospects, seamlessly handing off to a human agent when requested.  '
 featuredImage: /Projects/ai-chatbot-by-alecasgari.webp
 videoUrl: 'https://www.youtube.com/watch?v=bF5BZgnIZPE'
 projectLink: 'https://alecasgari.com/'
