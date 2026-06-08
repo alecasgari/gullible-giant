@@ -1,22 +1,20 @@
-name: Deploy to Server
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Deploy to server
-      uses: appleboy/ssh-action@v0.1.5
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          cd /var/www/gullible-giant
-          git pull origin main
-          npm run build
-          cp -r public/admin dist/
+- name: Deploy to server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/gullible-giant
+            git pull origin main
+            
+            # پاک کردنِ کشِ قدیمی و نصبِ مجدد پکیج‌ها (خیلی مهمه)
+            npm install
+            
+            # بیلد کردن پروژه
+            npm run build
+            
+            # کپی فقط در صورتی که وجود داشته باشه (امن کردنِ دستورِ قبلی)
+            if [ -d "public/admin" ]; then
+              cp -r public/admin dist/
+            fi
