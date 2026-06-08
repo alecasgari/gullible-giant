@@ -16,10 +16,10 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /var/www/gullible-giant
+          cd /home/alecadmin/alec-website
           git pull origin main
           npm install
-          npm run build -- --verbose
+          npx astro build
           if [ -d "public/admin" ]; then
             cp -r public/admin dist/
           fi
