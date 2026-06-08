@@ -36,7 +36,7 @@ app.use(express.json({
 }));
 
 const HOST = process.env.HOST || '127.0.0.1';
-const PORT = Number(process.env.PORT || 3005);
+const PORT = Number(process.env.PORT || 9876);
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 const REPO_DIR = process.env.REPO_DIR || '/home/alecadmin/alec-website';
 const DEPLOY_SCRIPT = process.env.DEPLOY_SCRIPT || path.join(__dirname, 'scripts', 'deploy-server.sh');
